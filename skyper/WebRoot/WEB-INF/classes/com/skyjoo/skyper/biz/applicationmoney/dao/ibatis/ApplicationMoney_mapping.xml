@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="ApplicationMoney">
+<typeAlias alias="ApplicationMoney"
+		type="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney" />
+    <resultMap id="re_ApplicationMoney" class="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
+        <result property="id" column="ID"/>
+        <result property="moneyUse" column="MONEY_USE"/>
+        <result property="applicant" column="APPLICANT"/>
+        <result property="inParagraph" column="IN_PARAGRAPH"/>
+        <result property="ammountOfMoneyC" column="AMMOUNT_OF_MONEYC"/>
+        <result property="ammountOfMoneyL" column="AMMOUNT_OF_MONEYL"/>
+        <result property="collectionUnitName" column="COLLECTION_UNIT_NAME"/>
+        <result property="departmentHead" column="DEPARTMENT_HEAD"/>
+        <result property="financialSigned" column="FINANCIAL_SIGNED"/>
+        <result property="account" column="ACCOUNT"/>
+        <result property="bankAccount" column="BANK_ACCOUNT"/>
+        <result property="supervisorSigned" column="SUPERVISOR_SIGNED"/>
+         <result property="currency" column="CURRENCY"/>
+        
+    </resultMap>
+    
+    <!-- 用于select查询公用抽取的列 -->
+	<sql id="ApplicationMoney.columns">
+	    <![CDATA[
+        ID ,MONEY_USE ,APPLICANT ,IN_PARAGRAPH ,AMMOUNT_OF_MONEYC ,AMMOUNT_OF_MONEYL ,COLLECTION_UNIT_NAME ,DEPARTMENT_HEAD ,FINANCIAL_SIGNED ,ACCOUNT ,BANK_ACCOUNT ,SUPERVISOR_SIGNED 
+	    ]]>
+	</sql>
+  
+	 <select id="selectByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney" resultMap="re_ApplicationMoney">
+	    SELECT <include refid="ApplicationMoney.columns"/>
+	    from application_money
+	    where 
+		        ID = #id:INTEGER# 
+ 	 </select>
+ 	 
+	<delete id="deleteByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
+	    delete from application_money
+    	where 
+		        ID = #id:INTEGER# 
+  </delete>
+  
+  	<delete id="deleteByWhere" parameterClass="java.lang.String">
+	    delete from application_money
+    	where 
+		      $swhere$
+	  </delete>
+  
+   <insert id="insert" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
+      <selectKey keyProperty="id">select seq_apply.nextval from dual</selectKey>
+	        insert into application_money (  ID ,   MONEY_USE ,   APPLICANT ,   IN_PARAGRAPH ,   AMMOUNT_OF_MONEYC ,   AMMOUNT_OF_MONEYL ,   COLLECTION_UNIT_NAME ,   DEPARTMENT_HEAD ,   FINANCIAL_SIGNED ,   ACCOUNT ,   BANK_ACCOUNT ,   SUPERVISOR_SIGNED ,CURRENCY  )
+   	 	values ( #id:INTEGER# ,  #moneyUse:VARCHAR# ,  #applicant:VARCHAR# ,  #inParagraph:VARCHAR# ,  #ammountOfMoneyC:VARCHAR# ,  #ammountOfMoneyL:INTEGER# ,  #collectionUnitName:VARCHAR# ,  #departmentHead:VARCHAR# ,  #financialSigned:VARCHAR# ,  #account:INTEGER# ,  #bankAccount:VARCHAR# ,  #supervisorSigned:VARCHAR# ,#currency:VARCHAR# )
+   	
+  </insert>
+ 	  <select id="getApplicationMoneyCount" resultClass="int"
+		parameterClass="ApplicationMoney">
+		select count(id)
+		from
+		ApplicationMoney su
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				su.id = #id:INTEGER# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getPaginatedApplicationMoney" resultMap="re_ApplicationMoney">
+   <![CDATA[
+   select * from (select a.*,rownum rn from ApplicationMoney a where rownum <= #endIndex#) where rn > #beginIndex#]]>
+	</select>
+ 	
+ 	<update id="updateByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
+   	UPDATE application_money SET
+	        MONEY_USE = #moneyUse:VARCHAR# ,
+	        APPLICANT = #applicant:VARCHAR# ,
+	        IN_PARAGRAPH = #inParagraph:VARCHAR# ,
+	        AMMOUNT_OF_MONEYC = #ammountOfMoneyC:VARCHAR# ,
+	        AMMOUNT_OF_MONEYL = #ammountOfMoneyL:INTEGER# ,
+	        COLLECTION_UNIT_NAME = #collectionUnitName:VARCHAR# ,
+	        DEPARTMENT_HEAD = #departmentHead:VARCHAR# ,
+	        FINANCIALSIGNED = #financialSigned:VARCHAR# ,
+	        ACCOUNT = #account:INTEGER# ,
+	        BANK_ACCOUNT = #bankAccount:VARCHAR# ,
+	        SUPERVISOR_SIGNED = #supervisorSigned:VARCHAR# 
+        WHERE 
+	        ID = #id:INTEGER# 
+  </update>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
+  	  update application_money
+  	  <dynamic prepend="set">
+  	   <isNotNull prepend="," property="moneyUse">
+  	 	  MONEY_USE = #moneyUse:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="applicant">
+  	 	  APPLICANT = #applicant:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="inParagraph">
+  	 	  IN_PARAGRAPH = #inParagraph:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="ammountOfMoneyC">
+  	 	  AMMOUNT_OF_MONEYC = #ammountOfMoneyC:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="ammountOfMoneyL">
+  	 	  AMMOUNT_OF_MONEYL = #ammountOfMoneyL:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="collentionUnitName">
+  	 	  COLLECTION_UNIT_NAME = #collectionUnitName:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="departmentHead">
+  	 	  DEPARTMENT_HEAD = #departmentHead:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="financialSigned">
+  	 	  FINANCIALSIGNED = #financialSigned:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="account">
+  	 	  ACCOUNT = #account:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="bankAccount">
+  	 	  BANK_ACCOUNT = #bankAccount:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="supervisorSigned">
+  	 	  SUPERVISOR_SIGNED = #supervisorSigned:VARCHAR#
+  	  </isNotNull>
+     </dynamic>
+    where ID = #id:INTEGER# 
+  </update>
+  
+   <select id="execSql" parameterClass="string" resultMap="re_ApplicationMoney"><![CDATA[$sql$]]></select>
+   
+    <select id="execSqlObject" parameterClass="string" resultClass="java.lang.Object"><![CDATA[$sql$]]></select>
+</sqlMap>
+

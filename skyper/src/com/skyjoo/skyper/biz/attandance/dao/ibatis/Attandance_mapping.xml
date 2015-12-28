@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="Attandance">
+<typeAlias alias="Attandance"
+		type="com.skyjoo.skyper.biz.attandance.domain.Attandance" />
+    <resultMap id="re_Attandance" class="com.skyjoo.skyper.biz.attandance.domain.Attandance">
+        <result property="id" column="ID"/>
+        <result property="staffId" column="STAFFID"/>
+        <result property="staffName" column="STAFFNAME"/>
+        <result property="type" column="TYPE"/>
+        <result property="datetime" column="DATETIME"/>
+    </resultMap>
+    
+    <!-- 用于select查询公用抽取的列 -->
+	<sql id="Attandance.columns">
+	    <![CDATA[
+        ID ,STAFFID ,STAFFNAME ,TYPE ,DATETIME,REMARK
+	    ]]>
+	</sql>
+  
+	 <select id="selectByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.attandance.domain.Attandance" resultMap="re_Attandance">
+	    SELECT <include refid="Attandance.columns"/>
+	    from attandance
+	    where 
+		        ID = #id:INTEGER# 
+ 	 </select>
+ 	 
+	<delete id="deleteByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.attandance.domain.Attandance">
+	    delete from attandance
+    	where 
+		        ID = #id:INTEGER# 
+  </delete>
+  
+  	<delete id="deleteByWhere" parameterClass="java.lang.String">
+	    delete from attandance
+    	where 
+		      $swhere$
+	  </delete>
+  
+   <insert id="insert" parameterClass="com.skyjoo.skyper.biz.attandance.domain.Attandance">
+     <selectKey keyProperty="id">select seq_attan.nextval from dual</selectKey>
+	        insert into attandance (  ID ,   STAFFID ,   STAFFNAME ,   TYPE ,   DATETIME ,REMARK  )
+   	 	values ( #id:INTEGER# ,  #staffId:VARCHAR# ,  #staffName:VARCHAR# ,  #type:VARCHAR# ,  #datetime:VARCHAR#,#remark:VARCHAR#  )
+   	
+  </insert>
+ 	  <select id="getAttandanceCount" resultClass="int"
+		parameterClass="Attandance">
+		select count(id)
+		from
+		Attandance su
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				su.id = #id:INTEGER# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getPaginatedAttandance" resultMap="re_Attandance">
+   <![CDATA[
+   select * from (select a.*,rownum rn from Attandance a where rownum <= #endIndex#) where rn > #beginIndex#]]>
+	</select>
+ 	
+ 	<update id="updateByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.attandance.domain.Attandance">
+   	UPDATE attandance SET
+	        STAFFID = #staffId:VARCHAR# ,
+	        STAFFNAME = #staffName:VARCHAR# ,
+	        TYPE = #type:VARCHAR# ,
+	        DATETIME = #datetime:VARCHAR# 
+	           REMARK = #remark:VARCHAR# 
+        WHERE 
+	        ID = #id:INTEGER# 
+  </update>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterClass="com.skyjoo.skyper.biz.attandance.domain.Attandance">
+  	  update attandance
+  	  <dynamic prepend="set">
+  	   <isNotNull prepend="," property="staffid">
+  	 	  STAFFID = #staffid:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="staffname">
+  	 	  STAFFNAME = #staffName:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="type">
+  	 	  TYPE = #type:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="datetime">
+  	 	  DATETIME = #datetime:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="remark">
+  	 	 REMARK = #remark:VARCHAR# 
+  	  </isNotNull>
+     </dynamic>
+    where ID = #id:INTEGER# 
+  </update>
+  
+   <select id="execSql" parameterClass="string" resultMap="re_Attandance"><![CDATA[$sql$]]></select>
+   
+    <select id="execSqlObject" parameterClass="string" resultClass="java.lang.Object"><![CDATA[$sql$]]></select>
+</sqlMap>
+

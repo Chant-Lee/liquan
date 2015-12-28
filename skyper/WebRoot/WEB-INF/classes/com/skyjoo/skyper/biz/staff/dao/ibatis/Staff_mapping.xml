@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="Staff">
+	<typeAlias alias="Staff"
+				type="com.skyjoo.skyper.biz.staff.domain.Staff" />
+
+    <resultMap id="re_Staff" class="com.skyjoo.skyper.biz.staff.domain.Staff">
+        <result property="id" column="ID"/>
+        <result property="staffName" column="STAFFNAME"/>
+        <result property="gender" column="GENDER"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="email" column="EMAIL"/>
+        <result property="cellphone" column="CELLPHONE"/>
+        <result property="cardId" column="CARDID"/>
+        <result property="bankCard" column="BANKCARD"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="entryTime" column="ENTRY_TIME"/>
+        <result property="currentAddress" column="CURRENT_ADDRESS"/>
+        <result property="gensusRegisterAdd" column="GENSUSREGISTER_ADD"/>
+        <result property="inServiceState" column="IN_SERVICE_STATE"/>
+        <result property="isAdmin"  nullValue="0" column="IS_ADMIN"/>
+        <result property="accountType" column="ACCOUNT_TYPE"/>
+        <result property="archives" column="ARCHIVES"/>
+        <result property="workYears" column="WORK_YEARS"/>
+        <result property="annualLeave" column="ANNUAL_LEAVE"/>
+        <result property="other" column="OTHER"/>
+        <result property="providentFundAccount" column="PROVIDENT_FUNDACCOUNT"/>
+        <result property="participateInTheWorkYear" column="PARTICIPATEIN_THE_WORKYEAR"/>
+         <result property="photo" column="PHOTO"/>
+    </resultMap>
+    
+    <!-- 用于select查询公用抽取的列 -->
+	<sql id="Staff.columns">
+	    <![CDATA[
+        ID ,STAFFNAME ,GENDER ,PASSWORD ,EMAIL ,CELLPHONE ,CARDID ,BANKCARD ,BIRTHDAY ,ENTRY_TIME ,CURRENT_ADDRESS ,GENSUSREGISTER_ADD ,IN_SERVICE_STATE ,IS_ADMIN ,ACCOUNT_TYPE ,ARCHIVES ,WORK_YEARS ,ANNUAL_LEAVE ,OTHER ,PROVIDENT_FUNDACCOUNT ,PARTICIPATEIN_THE_WORKYEAR,PHOTO 
+	    ]]>
+	</sql>
+  
+	 <select id="selectByPrimaryKey" parameterClass="Staff" resultMap="re_Staff">
+	    SELECT <include refid="Staff.columns"/>
+	    from staff
+	    where 
+		        ID = #id:INTEGER# 
+ 	 </select>
+ 	 
+	<delete id="deleteByPrimaryKey" parameterClass="Staff">
+	    delete from staff
+    	where 
+		        ID = #id:INTEGER# 
+  </delete>
+  
+  	<delete id="deleteByWhere" parameterClass="java.lang.String">
+	    delete from staff
+    	where 
+		      $swhere$
+	  </delete>
+  
+   <insert id="insert" parameterClass="Staff">
+	        insert into staff (  ID ,   STAFFNAME ,   GENDER ,   PASSWORD ,   EMAIL ,   CELLPHONE ,   CARDID ,   BANKCARD ,   BIRTHDAY ,   ENTRY_TIME ,   CURRENT_ADDRESS ,   GENSUSREGISTER_ADD ,   IN_SERVICE_STATE ,   IS_ADMIN ,   ACCOUNT_TYPE ,   ARCHIVES ,   WORK_YEARS ,   ANNUAL_LEAVE ,   OTHER ,   PROVIDENT_FUNDACCOUNT ,   PARTICIPATEIN_THE_WORKYEAR ,PHOTO  )
+   	 	values ( #id:INTEGER# ,  #staffName:VARCHAR# ,  #gender:VARCHAR# ,  #password:VARCHAR# ,  #email:VARCHAR# ,  #cellphone:VARCHAR# ,  #cardId:INTEGER# ,  #bankCard:INTEGER# ,  #birthday:TIMESTAMP# ,  #entryTime:TIMESTAMP# ,  #currentAddress:VARCHAR# ,  #gensusRegisterAdd:VARCHAR# ,  #inServiceState:VARCHAR# ,  #isAdmin:INTEGER# ,  #accountType:VARCHAR# ,  #archives:VARCHAR# ,  #workYears:INTEGER# ,  #annualLeave:INTEGER# ,  #other:VARCHAR# ,  #providentFundAccount:INTEGER# ,  #participateInTheWorkYear:VARCHAR# ,#photo:VARCHAR# )
+   	
+  </insert>
+  
+    <select id="getStaffCountBir" resultClass="int" parameterClass="Staff"> 
+    <![CDATA[
+  select count(id) from staff where to_char (birthday,'mm-dd') in ( select to_char(sysdate+rownum,'mm-dd')from dual
+ connect by rownum<=7 )
+ ]]>
+ </select>
+ 
+     <select id="getStaffCountBirM" resultClass="int" parameterClass="Staff"> 
+    <![CDATA[
+ select count(id) from staff where (to_char(birthday,'MM')=to_char(sysdate,'MM'))
+ ]]>
+ </select>
+ 
+  
+  
+ 	  <select id="getStaffCount" resultClass="int" parameterClass="Staff">
+		select count(id)
+		from
+		Staff su
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="staffName">
+				su.staffName like '%$staffName$%'
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getPaginatedStaff" resultMap="re_Staff">
+   <![CDATA[
+   select * from (select a.*,rownum rn from Staff a where staffName like '%$staffName$%' and rownum <= #endIndex#) where rn > #beginIndex#  ]]>
+	</select>
+ 	
+ 	<update id="updateByPrimaryKey" parameterClass="Staff">
+   	UPDATE staff SET
+	        STAFFNAME = #staffName:VARCHAR# ,
+	        GENDER = #gender:VARCHAR# ,
+	        PASSWORD = #password:VARCHAR# ,
+	        EMAIL = #email:VARCHAR# ,
+	        CELLPHONE = #cellphone:VARCHAR# ,
+	        CARDID = #cardId:INTEGER# ,
+	        BANKCARD = #bankCard:INTEGER# ,
+	        BIRTHDAY = #birthday:TIMESTAMP# ,
+	        ENTRY_TIME = #entryTime:TIMESTAMP# ,
+	        CURRENT_ADDRESS = #currentAddress:VARCHAR# ,
+	        GENSUSREGISTER_ADD = #gensusRegisterAdd:VARCHAR# ,
+	        IN_SERVICE_STATE = #inServiceState:VARCHAR# ,
+	        IS_ADMIN = #isAdmin:INTEGER# ,
+	        ACCOUNT_TYPE = #accountType:VARCHAR# ,
+	        ARCHIVES = #archives:VARCHAR# ,
+	        WORK_YEARS = #workYears:INTEGER# ,
+	        ANNUAL_LEAVE = #annualLeave:INTEGER# ,
+	        OTHER = #other:VARCHAR# ,
+	        PROVIDENT_FUNDACCOUNT = #providentFundAccount:INTEGER# ,
+	        PARTICIPATEIN_THE_WORKYEAR = #participateInTheWorkYear:VARCHAR#,
+	        PHOTO = #photo:VARCHAR#
+	        
+        WHERE 
+	        ID = #id:INTEGER# 
+  </update>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterClass="Staff">
+  	  update staff
+  	  <dynamic prepend="set">
+  	   <isNotNull prepend="," property="staffName">
+  	 	  STAFFNAME = #staffName:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="gender">
+  	 	  GENDER = #gender:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="password">
+  	 	  PASSWORD = #password:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="email">
+  	 	  EMAIL = #email:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="cellphone">
+  	 	  CELLPHONE = #cellphone:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="cardId">
+  	 	  CARDID = #cardId:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="bankCard">
+  	 	  BANKCARD = #bankCard:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="birthday">
+  	 	  BIRTHDAY = #birthday:TIMESTAMP#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="entryTime">
+  	 	  ENTRY_TIME = #entryTime:TIMESTAMP#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="currentAddress">
+  	 	  CURRENT_ADDRESS = #currentAddress:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="gensusRegisterAdd">
+  	 	  GENSUSREGISTER_ADD = #gensusRegisterAdd:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="inServiceState">
+  	 	  IN_SERVICE_STATE = #inServiceState:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="isAdmin">
+  	 	  IS_ADMIN = #isAdmin:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="accountType">
+  	 	  ACCOUNT_TYPE = #accountType:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="archives">
+  	 	  ARCHIVES = #archives:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="workYears">
+  	 	  WORK_YEARS = #workYears:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="annualLeave">
+  	 	  ANNUAL_LEAVE = #annualLeave:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="other">
+  	 	  OTHER = #other:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="providenFundAccount">
+  	 	  PROVIDENT_FUNDACCOUNT = #providentFundAccount:INTEGER#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="participateInTheWorkYear">
+  	 	  PARTICIPATEIN_THE_WORKYEAR = #participateInTheWorkYear:VARCHAR#
+  	  </isNotNull>
+  	    <isNotNull prepend="," property="photo">
+  	 	  PHOTO = #photo:VARCHAR#
+  	  </isNotNull>
+     </dynamic>
+    where ID = #id:INTEGER# 
+  </update>
+  
+  <select id="getPaginatedStaffBir" resultMap="re_Staff">
+   <![CDATA[
+  select * from staff where to_char (birthday,'mm-dd') in ( select to_char(sysdate+rownum,'mm-dd')from dual
+ connect by rownum<=7 )
+ ]]></select>
+ 
+ 
+   <select id="getPaginatedStaffBirM" resultMap="re_Staff">
+   <![CDATA[
+  select * from staff where (to_char(birthday,'MM')=to_char(sysdate,'MM'))
+ ]]></select>
+
+ 
+   <select id="execSql" parameterClass="string" resultMap="re_Staff"><![CDATA[$sql$]]></select>
+   
+    <select id="execSqlObject" parameterClass="string" resultClass="java.lang.Object"><![CDATA[$sql$]]></select>
+</sqlMap>
+

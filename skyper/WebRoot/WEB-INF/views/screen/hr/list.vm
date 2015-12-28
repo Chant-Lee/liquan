@@ -1,0 +1,62 @@
+#set($layout = 'layout/default.vm')
+ <div class="search-box"">
+    <form id="form" name="form" action="list.htm" method="get" >
+        <table>
+            <tr>
+			 <th>姓名</th>
+                <td>
+                    <input type="text" name="staffName" onKeyUp="this.value=this.value.trim()" id="serchUserName" maxlength="16" class="inp"></td>
+                    <td>
+                        <input type="submit" name="search" value="查询" class="but-61" />
+                    </td>
+</tr>
+</table>
+</form>
+</div>
+<div class="basic">
+    <div class="tool">
+        <span>
+            <a href="add-init.htm" class="bt_add"  hidefocus="true" >新增</a>
+        </span>
+    </div>
+	<div class="listbox" >
+        <table class="list-table"  >
+            <tr>
+				<th>账号</th>
+                <th>用户名</th>
+				<th>邮箱</th>
+				<th>电话</th>
+				<th>生日</th>
+				<th>操作</th>
+            </tr>
+			
+            #if($!{page2} && ${page2.totalCount} > 0)
+                #foreach($staff in $page2.getData())
+                    <tr #if($!{velocityCount}%2 == 0) class="bg" #end>
+                            <td>$!{staff.id}</td>
+							<td>$!{staff.staffName}</td>
+							<td>$!{staff.email}</td>
+							<td>$!{staff.cellphone}</td>
+							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{staff.birthday})</td>
+							<td class="link-td">
+                            <a href="edit-init.htm?id=$!{staff.id}">修改</a>
+                            <a href="remove.htm?id=$!{staff.id}" onClick="return confirm('确定删除该用户吗？');" name="delete">删除</a>	
+							<a href="detail.htm?id=$!{staff.id}">详情</a>
+                            </td>
+						
+                    </tr>
+                #end
+                #else
+                    <tr>
+                        <td>
+                            <p class="ts">没有结果</p>
+                        </td>
+                    </tr>
+			#end
+        </table>
+		<div class="pages-box">
+        #pager($page2, "form")
+        </div>
+		 <div class="clear"></div>
+    </div>
+</div>

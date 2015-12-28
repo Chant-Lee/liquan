@@ -1,0 +1,8 @@
+#set($layout = 'layout/blank.vm')
+<!-- 页脚 -->  
+<div class="body-foot">
+    <p>
+        天骄员工管理系统
+    </p>
+</div>
+<!-- 页脚 END -->

@@ -1,0 +1,148 @@
+<script language="javascript">
+		
+		$(document).ready((function(){ 
+		
+			var now=new Date();
+			
+			$("#nowtime").html(now.getFullYear()+"年"+(now.getMonth()+1)+"月"+(now.getDate())+"日");
+		
+		}))
+
+		</script>
+<style type="text/css">
+	@media print { 
+        #notprint1 { 
+           display:none; 
+           } 
+} 
+
+			table.gridtable {
+				font-family: verdana, arial, sans-serif;
+				font-size: 11px;
+				color: #333333;
+				border-width: 1px;
+				border-color: #666666;
+				border-collapse: collapse;
+			}
+			table.gridtable th {
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #dedede;
+			}
+			table.gridtable td {
+			    
+				width: 80px;
+				border-width: 1px;
+				padding: 8px;
+				border-style: solid;
+				border-color: #666666;
+				background-color: #ffffff;
+			}
+			input
+			{
+			   height:100%;
+			   width:100%;
+			   border:none;
+			   line-height:20px;
+		
+			}
+			
+		</style>
+		<div align="center">
+			<div style="height:40px"></div>
+<div align="center"><span>用款申请单</span></div>
+	<form id="addleave" action="applicationMoney.htm" method="post" name="form1">
+
+		<div align="center">申请日期<a id="nowtime" style="color:black">
+					</a></div>
+		<table class=gridtable align="center" >
+			<tr>
+				
+				<td>用款用途：</td>
+				<td id="yongtu" >
+					#springBind("applicationMoney.moneyUse")
+					<input type="text"  class="inp" id="moneyUse" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				<td>用款方式：</td> 
+				<td id="fangshi" > 
+				   #springBind("applicationMoney.inParagraph")
+				    <input type="text" class="inp" id="inParagraph" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				
+			</tr>
+			<tr><td >货币币种:</td> 
+				<td id="fangshi"  colspan="3"> 
+				   #springBind("applicationMoney.currency")
+				    <input type="text" class="inp" id="currency" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td></tr>
+			<tr>
+				<td>用款金额(大写：)</td>
+				<td id="daxie" >
+				   #springBind("applicationMoney.ammountOfMoneyC")
+					<input type="text" class="inp" id="ammountOfMoneyC" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				<td>用款金额(小写):</td>
+				<td id="xiaoxie" >
+				    #springBind("applicationMoney.ammountOfMoneyL")
+					<input type="text" class="inp" id="ammountOfMoneyL" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+			</tr>
+			<tr>
+				<td>申请人:</td>
+				<td id="shenqingren" >
+				   #springBind("applicationMoney.applicant")
+					<input type="text" class="inp" id="applicant" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				<td>部门负责人:</td>
+				<td id="fuzeren" >
+				    #springBind("applicationMoney.departmentHead")
+					<input type="text" class="inp" id="departmentHead" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+
+			</tr>
+
+			<tr>
+				<td>收款单位全称: </td>
+				<td id="danwei" >
+				   #springBind("applicationMoney.collectionUnitName")
+					<input type="text" class="inp" id="collectionUnitName" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				<td>账号:</td>
+				<td id="zhanghao" >
+				   #springBind("applicationMoney.account")
+					<input type="text" class="inp" id="account" name="${status.expression}" value="$!{status.value}" maxlength="32">						
+				</td>
+			</tr>
+			<tr>
+				<td>开户银行:</td>
+				<td id="yinghang" colspan="3" >
+				   #springBind("applicationMoney.bankAccount")
+					<input type="text" class="inp" id="bankAccount" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+			</tr>
+			<tr>
+				<td>主管签批:</td>
+				<td id="zhuguan" >
+				   #springBind("applicationMoney.supervisorSigned")
+					<input type="text" class="inp" id="supervisorSigned" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+				<td>财务签批:</td>
+				<td id="caiwu" >
+				   #springBind("applicationMoney.financialSigned")
+					<input type="text" class="inp" id="financialSigned" name="${status.expression}" value="$!{status.value}" maxlength="10">						
+				</td>
+			</tr>
+
+		</table>
+		  <!-- 表单按钮区 -->
+            <div class="form-but">
+				<input type='button' id='notprint1' class="but" value='打印'  onclick='javascript:window.print();' />
+                <input type="submit" onClick="return confirm('确定提交吗？');"  name="save" class="but" id='notprint1'  value="提交申请"/>
+                <a href="list.htm"><input type="button"  class="but" id='notprint1' value="返回" /></a>
+            </div>
+            <!-- 表单按钮区 END -->
+            <div class="clear"></div>
+    </form>
+		</div>

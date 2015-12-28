@@ -1,0 +1,51 @@
+#set($layout = 'layout/default.vm')
+ <div class="search-box"">
+    <form id="form" name="form" action="leavecount.htm" method="get" >
+</form>
+</div>
+<div class="basic">
+    <div class="tool">
+
+    </div>
+	<div class="listbox" >
+        <table class="list-table"  >
+            <tr>
+				<th>请假内容</th>
+				<th>请假类型</th>
+				<th>请假起始时间</th>
+				<th>请假结束时间</th>
+				<th>提交日期</th>
+				<th>操作</th>
+            </tr>
+		
+            #if($!{page2} && ${page2.totalCount} > 0)
+                #foreach($leave in $page2.getData())
+                    <tr #if ($!{velocityCount}%2 == 0) class="bg" #end >
+                        
+							<td>$!{leave.leaveContent}</td>
+							<td>$!{leave.leaveType}</td>
+							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{leave.leaveTime})</td>
+							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{leave.leaveTargetTime})</td>
+							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{leave.dateSubmission})</td>
+							<td class="link-td" #if ($!{leave.isAccept}==1) style="display: none;" #end >
+                            <a href="javascript:void(0)">未批准</a>	
+							<a href="detail.htm?id=$!{leave.id}">详情</a>
+                            </td>
+							 <td class="link-td" #if ($!{leave.isAccept}==0) style="display: none;" #end>已批准</td>
+						
+                    </tr>
+                #end
+                #else
+                    <tr>
+                        <td>
+                            <p class="ts">没有结果</p>
+                        </td>
+                    </tr>
+			#end
+        </table>
+		<div class="pages-box">
+        #pager($page2, "form")
+        </div>
+		 <div class="clear"></div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+#set($layout = 'layout/default.vm')
+<script type="text/javascript">
+   
+$(function() {
+ 
+
+$('#addleave').validate({
+		rules: {
+		    fullName: {    
+				required : true
+            },
+            operatorName: {    
+				required : true
+            },
+			contactsName: {
+			    required : true
+			},
+			mobile: {
+			    required : true,
+				mobile : true
+            },
+			email:{
+			    required : true,
+				email : true
+			}
+        }
+	});
+});
+
+       
+
+</script>
+<div class="basic">
+    <ul class="form-tab">
+        <li class="c">
+            <span>申请请假</span>
+        </li>
+    </ul>
+	<form id="addleave" action="apply.htm" method="post" name="form1">
+	<div class="formbox">
+        <div class="clear"></div>
+        <div class="nr">
+            <div class="nr-t"></div>
+            <div class="nr-c">
+                <table class="c2 c4">
+		
+                    <tr>
+                        <th><span class="required"></span>员工号:</th>
+                        <td>
+							#springBind("leave.staffId")
+							<input disabled="true" type="text" class="inp" id="staffId" name="${status.expression}" value="$!{status.value}" maxlength="85">
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required"></span>员工:</th>
+                        <td>
+							#springBind("leave.staffName")
+							<input  disabled="true" type="text" class="inp" id="staffName" name="${status.expression}" value="$!{status.value}" maxlength="85">
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required"></span>请假内容:</th>
+                        <td>
+							#springBind("leave.leaveContent")
+							<input disabled="true" type="text" class="inp" id="leaveContent" name="${status.expression}" value="$!{status.value}" maxlength="10">
+						
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required"></span>请假类型:</th>
+                        <td>
+							#springBind("leave.leaveType")
+							<input  disabled="true" type="text" class="inp" id="get"  name="get" value="$!{status.value}" maxlength="10">
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required"></span>请假起始时间:</th>
+                        <td>
+							#springBind("leave.leaveTime")
+							<input  disabled="true" type="date" class="inp" id="leaveTime" name="${status.expression}" value="$!{status.value}" maxlength="11">
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required"></span>请假结束时间:</th>
+                        <td>
+							#springBind("leave.leaveTargetTime")
+							<input  disabled="true" type="date" class="inp" id="leaveTargetTime" name="${status.expression}" value="$!{status.value}" maxlength="32">
+                        </td>
+					</tr>
+					
+			</table>
+		</div>
+		<div class="nr-b"></div>
+                </div>
+
+            <!-- 表单按钮区 -->
+            <div class="form-but">
+                <a href="accept.htm?id=$!{leave.id}" onClick="return confirm('确定批准吗？');"><input type="button"  class="but" value="批准" /></a>
+                <a href="list.htm"><input type="button"  class="but" value="返回" /></a>
+            </div>
+            <!-- 表单按钮区 END -->
+            <div class="clear"></div>
+         </div>
+		</form>
+</div>
