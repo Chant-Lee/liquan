@@ -1,0 +1,4 @@
+#set($layout = 'layout/default.vm')
+登录成功 ！！！ 
+  用户：$!{name} 密码：$!{Password} 
+  <a href="list.htm">aaa</a>

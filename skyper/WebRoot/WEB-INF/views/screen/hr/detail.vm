@@ -1,0 +1,236 @@
+<link rel="stylesheet" type="text/css" href="$!{imageServer}/styles/validate.css" />
+<script src="$!{imageServer}/scripts/system/user.js" type="text/javascript" charset="gb2312"></script>
+<script src="$!{imageServer}/scripts/jquery.validate.js" type="text/javascript"></script>
+<script>
+
+
+
+    $(function(){
+   		 $("#save").click(function(){
+    		$("input[name=role]").each(function(){
+    			 if($(this).attr("checked")) {
+   					 var roles = $("#roles").val()+""+$(this).val()+",";
+   		 			 $("#roles").val(roles);
+   				 }
+   			 });
+    	})
+    })
+</script>
+<style type="text/css">
+	.inp{disabled:"disabled"}
+</style>
+<div class="main-right" >
+    <div class="basic">
+		<ul class="form-tab">
+            <li class="c">
+                <span>用户修改</span>
+            </li>
+        </ul>
+        <div class="formbox">
+            <div class="clear"></div>
+            <form id="staff" name="staff" action="edit.htm" method="post">
+				<div id="img" style="
+    position: absolute;
+    right: 15%;
+    top: 10%;
+">
+             
+			   #if(${staff.photo})
+<img id="preview" src="$!{imageServer}/upload/${staff.photo}" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
+ 	#else
+		<img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
+#end
+			
+                </div>
+				
+                    <div class="nr">
+                        <div class="nr-t"></div>
+                        <div class="nr-c">
+                            <table class="c2">
+                                <tr>
+                                    <th>
+                      
+											ID：
+									</th>
+                                    <td>
+                                        #springBind("staff.id")
+                                        <input  disabled="true" class="inp"	required="required" type="text"  name="${status.expression}" value="$!{status.value}" maxlength="12" class="inp" />
+                                     
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                     
+											姓名：
+									</th>
+                                    <td>
+                                        #springBind("staff.staffName")
+                                        <input   disabled="true" class="inp" required="required"	type="text"  name="${status.expression}" value="$!{status.value}" maxlength="16" class="inp"/>
+                                    
+                                    </td>
+                                </tr>
+								
+								<tr>
+                                    <th>性别：</th>
+                                    <td>
+                                        #springBind("staff.gender")
+									
+										<input  disabled="true" type="radio"  required="required" name="${status.expression}" onclick="check(this.value)"value="男" #if($!{status.value}=="男")
+											checked="checked"
+									    #end/>男<br />
+                                        <input  disabled="true" type="radio" name="${status.expression}" onclick="check(this.value)"value="女"  	#if($!{status.value}=="女")
+											checked="checked"
+									    #end/>女<br />
+                                    </td>
+                                </tr>
+								
+								 <tr>
+                                    <th>
+                                       
+											密码：
+									</th>
+                                    <td>
+                                        #springBind("staff.password")
+                                        <input class="inp"	 disabled="true" required="required" type="password" id="password" name="${status.expression}" value="$!{status.value}" maxlength="16" class="inp"/>
+                                    
+                                    </td>
+								</tr>	
+                                <tr>
+                                    <th>
+                                       
+                                        E-mail：
+									</th>
+                                    <td>
+                                        #springBind("staff.email")
+                                        <input class="inp"   disabled="true" required="required" 	type="email" id="email"name="${status.expression}" value="$!{status.value}" maxlength="36" class="inp" />
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>电    话：</th>
+                                    <td>
+                                        #springBind("staff.cellphone")
+                                        <input class="inp"  disabled="true"	 required="required" type="text" id="tel" name="${status.expression}" value="$!{status.value}" maxlength="13" class="inp"/>
+                                      
+                                    </td>
+                                </tr>
+								 <tr>
+                                    <th>身份证：</th>
+                                    <td>
+                                        #springBind("staff.cardId")
+                                        <input class="inp"	 disabled="true" required="required" type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                   </td>
+                                </tr>
+					
+								 <tr>
+                                    <th>银行卡号：</th>
+                                    <td>
+                                        #springBind("staff.bankCard")
+                                        <input class="inp"	 disabled="true" required="required" type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+							
+
+                                <tr>
+                                    <th>生日：</th>
+                                    <td>
+                                        #springBind("staff.birthday")
+                                        <input class="inp"	 disabled="true" required="required" type="date"  name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+							
+								<tr>
+                                    <th>入职时间：</th>
+                                    <td>
+										
+                                        #springBind("staff.entryTime")
+                                        <input class="inp"	 disabled="true" required="required" type="date"  name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+								<tr>
+                                    <th>当前居住地：</th>
+                                    <td>
+                                        #springBind("staff.currentAddress")
+                                        <input class="inp"	 disabled="true" type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+								<tr>
+                                    <th>户口地址：</th>
+                                    <td>
+                                        #springBind("staff.gensusRegisterAdd")
+                                        <input class="inp"	 disabled="true" type="text"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+								<tr>
+                                    <th>在职状态：</th>
+                                    <td>
+                                        #springBind("staff.inServiceState")
+                                        <input class="inp"  disabled="true"	type="text" required="required"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                       </td>
+                                </tr>
+								<tr>
+                                    <th>户口类型：</th>
+                                    <td>
+                                        #springBind("staff.accountType")
+                                        <input class="inp" disabled="true"	type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                         </td>
+                                </tr>
+								<tr>
+                                    <th>档案：</th>
+                                    <td>
+                                        #springBind("staff.archives")
+                                        <input class="inp" disabled="true"	type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                          </td>
+                                </tr>
+								<tr>
+                                    <th>工龄：</th>
+                                    <td>
+                                        #springBind("staff.workYears")
+                                        <input class="inp" disabled="true"	type="text"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                         </td>
+                                </tr>
+								<tr>
+                                    <th>年假：</th>
+                                    <td>
+                                        #springBind("staff.annualLeave")
+                                        <input class="inp" disabled="true"	type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                          </td>
+                                </tr>
+								<tr>
+                                    <th>公积金账号：</th>
+                                    <td>
+                                        #springBind("staff.providentFundAccount")
+                                        <input class="inp" disabled="true"	type="text"  required="required"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                              </td>
+                                </tr>
+								<tr>
+                                    <th>参加工作时间：</th>
+                                    <td>
+                                        #springBind("staff.participateInTheWorkYear")
+                                        <input class="inp" disabled="true"	type="date"  required="required" name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
+                                           </td>
+                                </tr>
+								<tr>
+                                    <th>补充：</th>
+                                    <td>
+                                        #springBind("staff.other")
+                                        <input class="inp" disabled="true"	type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                         </td>
+                                </tr>
+               
+                             
+							</table>
+						</div>
+						<div class="nr-b"></div>
+						<input type="hidden" id="roles" name="roles" value=""/>
+                        </div>
+                        <div class="form-but"><!-- 表单按钮区 -->
+                            <input type="button" class="but"  onclick="location.href='list.htm'" value="返回" />
+                        </div>
+                        <!-- 表单按钮区 END -->
+                        <div class="clear"></div>
+				</form>
+			</div>
+			<div class="clear"></div>
+     </div>
+</div>

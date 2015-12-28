@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="USER">
+
+	<typeAlias alias="user"
+		type="com.skyjoo.skyper.biz.user.domain.User" />
+ 
+  
+    
+	<resultMap id="userResultMap" class="user">
+		<result column="ACCOUNT" property="account" />
+		<result column="PASSWORD" property="password" />
+	
+	</resultMap>
+	<sql id="User.columns">
+	    <![CDATA[
+        account,password 
+	    ]]>
+	</sql>
+  
+
+	<select id="getUser" parameterClass="String" resultMap="userResultMap">
+		select <include refid="User.columns"/>
+		from USERTEST 
+		where ACCOUNT = #userName#
+	</select>
+
+
+</sqlMap>

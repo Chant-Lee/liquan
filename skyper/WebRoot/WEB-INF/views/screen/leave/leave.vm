@@ -1,0 +1,77 @@
+#set($layout = 'layout/default.vm')
+
+<div class="basic">
+    <ul class="form-tab">
+        <li class="c">
+            <span>申请请假</span>
+        </li>
+    </ul>
+	<form id="addleave" action="apply.htm" method="post" name="form1">
+	<div class="formbox">
+        <div class="clear"></div>
+        <div class="nr">
+            <div class="nr-t"></div>
+            <div class="nr-c">
+                <table class="c2 c4">
+					 
+                
+					<tr>
+                        <th><span class="required">*</span>请假内容:</th>
+                        <td>
+							#springBind("leave.leaveContent")
+							<input type="text" class="inp" id="leaveContent" name="${status.expression}" value="$!{status.value}" maxlength="10">
+						
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required">*</span>请假类型:</th>
+                        <td>
+							#springBind("leave.leaveType")
+							<select class="inp" id="leaveType"  name="${status.expression}" value="$!{status.value}" maxlength="10">  
+								<option selected>请选择</option>
+                                 <option value="年假">年假</option>
+								 <option value="婚假">婚假</option>
+								 <option value="孕假">孕假</option>
+								 <option value="病假">病假</option>
+								 <option value="护理假">护理假</option>
+								 <option value="年休假">年休假</option>
+								 <option value="产假">产假</option>
+								 <option value="事假">事假</option>
+								 <option value="事假">其他</option>
+                            </select>
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required">*</span>请假起始时间:</th>
+                        <td>
+							#springBind("leave.leaveTime")
+							<input type="date" class="inp" name="${status.expression}" value="$!{status.value}" maxlength="32">
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					<tr>
+                        <th><span class="required">*</span>请假结束时间:</th>
+                        <td>
+							#springBind("leave.leaveTargetTime")
+							<input type="date" class="inp" name="${status.expression}" value="$!{status.value}" maxlength="32">
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					
+			</table>
+		</div>
+		<div class="nr-b"></div>
+                </div>
+
+            <!-- 表单按钮区 -->
+            <div class="form-but">
+                <input type="submit" id="save" name="save" class="but" value="提交申请"/>
+                <a href="list.htm"><input type="button"  class="but" value="返回" /></a>
+            </div>
+            <!-- 表单按钮区 END -->
+            <div class="clear"></div>
+         </div>
+		</form>
+</div>

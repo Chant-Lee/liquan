@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="Leave">
+<typeAlias alias="Leave"
+		type="com.skyjoo.skyper.biz.leave.domain.Leave" />
+    <resultMap id="re_Leave" class="com.skyjoo.skyper.biz.leave.domain.Leave">
+        <result property="id" column="ID"/>
+        <result property="leaveContent" column="LEAVE_CONTENT"/>
+        <result property="leaveType" column="LEAVE_TYPE"/>
+        <result property="leaveTime" column="LEAVE_TIME"/>
+        <result property="leaveTargetTime" column="LEAVE_TARGET_TIME"/>
+        <result property="staffId" column="STAFFID"/>
+        <result property="dateSubmission" column="DATE_SUBMISSION"/>
+        <result property="isAccept" column="ISACCEPT"/>
+        <result property="staffName" column="STAFFNAME"/>
+    </resultMap>
+    
+    <!-- 用于select查询公用抽取的列 -->
+	<sql id="Leave.columns">
+	    <![CDATA[
+        ID ,LEAVE_CONTENT ,LEAVE_TYPE ,LEAVE_TIME ,LEAVE_TARGET_TIME ,STAFFID ,DATE_SUBMISSION ,ISACCEPT,STAFFNAME
+	    ]]>
+	</sql>
+  
+	 <select id="selectByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.leave.domain.Leave" resultMap="re_Leave">
+	    SELECT <include refid="Leave.columns"/>
+	    from leave
+	    where 
+		        ID = #id:INTEGER# 
+ 	 </select>
+ 	 
+	<delete id="deleteByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.leave.domain.Leave">
+	    delete from leave
+    	where 
+		        ID = #id:INTEGER# 
+  </delete>
+  
+  	<delete id="deleteByWhere" parameterClass="java.lang.String">
+	    delete from leave
+    	where 
+		      $swhere$
+	  </delete>
+  
+   <insert id="insert" parameterClass="com.skyjoo.skyper.biz.leave.domain.Leave">
+   <selectKey keyProperty="id">select seq_leave.nextval from dual</selectKey>
+	        insert into leave (  ID ,   LEAVE_CONTENT ,   LEAVE_TYPE ,   LEAVE_TIME ,   LEAVE_TARGET_TIME ,   STAFFID ,   DATE_SUBMISSION   ,ISACCEPT, STAFFNAME)
+   	 	values ( #id:INTEGER# ,  #leaveContent:VARCHAR# ,  #leaveType:VARCHAR# ,  #leaveTime:TIMESTAMP# ,  #leaveTargetTime:TIMESTAMP# ,  #staffId:NUMBER# ,  #dateSubmission:TIMESTAMP#,#isAccept#,#staffName:VARCHAR#  )
+   	
+  </insert>
+ 	
+ 	
+ 	<update id="updateByPrimaryKey" parameterClass="Leave">
+   	UPDATE leave SET
+	        LEAVE_CONTENT = #leaveContent:VARCHAR# ,
+	        LEAVE_TYPE = #leaveType:VARCHAR# ,
+	        LEAVE_TIME = #leaveTime:TIMESTAMP# ,
+	        LEAVE_TARGET_TIME = #leaveTargetTime:TIMESTAMP# ,
+	        STAFFID = #staffId:VARCHAR# ,
+	        DATE_SUBMISSION = #dateSubmission:TIMESTAMP# ,
+	        ISACCEPT=#isAccept#,
+	        STAFFNAME=#staffName#
+        WHERE 
+	        ID = #id:INTEGER# 
+  </update>
+  
+  <select id="getLeaveCount" resultClass="int"
+		parameterClass="Leave">
+		select count(id)
+		from
+		Leave su
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				su.id = #id:INTEGER# 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="staffId">
+				su.staffId = #staffId:INTEGER# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getPaginatedLeave" resultMap="re_Leave">
+   <![CDATA[   
+   select temp2.* from(
+　　select rownum num,temp1.* from(
+　　  select *   from leave u
+ ]]> <isNotEmpty  prepend="where" property="staffId">
+				u.staffId = #staffId:INTEGER# 
+			</isNotEmpty><![CDATA[   
+      order by u.isAccept asc, id desc
+　　) temp1 where rownum<=#endIndex#
+　　)temp2   where temp2.num>#beginIndex#
+  ]]>
+	</select>
+	
+  <update id="updateByPrimaryKeySelective" parameterClass="com.skyjoo.skyper.biz.leave.domain.Leave">
+  	  update leave
+  	  <dynamic prepend="set">
+  	   <isNotNull prepend="," property="leaveContent">
+  	 	  LEAVE_CONTENT = #leaveContent:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="leaveType">
+  	 	  LEAVE_TYPE = #leaveType:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="leaveTime">
+  	 	  LEAVE_TIME = #leaveTime:TIMESTAMP#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="leaveTargetTime">
+  	 	  LEAVE_TARGET_TIME = #leaveTargetTime:TIMESTAMP#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="staffId">
+  	 	  STAFFID = #staffId:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="dateSubmission">
+  	 	  DATE_SUBMISSION = #dateSubmission:TIMESTAMP#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="isAccept">
+  	 	  ISACCEPT = #isAccept#
+  	  </isNotNull>
+  	
+  	    <isNotNull prepend="," property="staffName">
+  	 	    STAFFNAME=#staffName#
+  	  </isNotNull>
+  	  
+     </dynamic>
+    where ID = #id:INTEGER# 
+  </update>
+  
+   <select id="execSql" parameterClass="string" resultMap="re_Leave"><![CDATA[$sql$]]></select>
+   
+    <select id="execSqlObject" parameterClass="string" resultClass="java.lang.Object"><![CDATA[$sql$]]></select>
+</sqlMap>
+
