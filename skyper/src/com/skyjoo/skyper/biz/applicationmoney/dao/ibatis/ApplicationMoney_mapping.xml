@@ -18,14 +18,15 @@
         <result property="account" column="ACCOUNT"/>
         <result property="bankAccount" column="BANK_ACCOUNT"/>
         <result property="supervisorSigned" column="SUPERVISOR_SIGNED"/>
-         <result property="currency" column="CURRENCY"/>
+        <result property="currency" column="CURRENCY"/>
+        <result property="subDate" column="SUBDATE"/>
         
     </resultMap>
     
     <!-- 用于select查询公用抽取的列 -->
 	<sql id="ApplicationMoney.columns">
 	    <![CDATA[
-        ID ,MONEY_USE ,APPLICANT ,IN_PARAGRAPH ,AMMOUNT_OF_MONEYC ,AMMOUNT_OF_MONEYL ,COLLECTION_UNIT_NAME ,DEPARTMENT_HEAD ,FINANCIAL_SIGNED ,ACCOUNT ,BANK_ACCOUNT ,SUPERVISOR_SIGNED 
+        ID ,MONEY_USE ,APPLICANT ,IN_PARAGRAPH ,AMMOUNT_OF_MONEYC ,AMMOUNT_OF_MONEYL ,COLLECTION_UNIT_NAME ,DEPARTMENT_HEAD ,FINANCIAL_SIGNED ,ACCOUNT ,BANK_ACCOUNT ,SUPERVISOR_SIGNED,CURRENCY,SUBDATE 
 	    ]]>
 	</sql>
   
@@ -50,15 +51,15 @@
   
    <insert id="insert" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
       <selectKey keyProperty="id">select seq_apply.nextval from dual</selectKey>
-	        insert into application_money (  ID ,   MONEY_USE ,   APPLICANT ,   IN_PARAGRAPH ,   AMMOUNT_OF_MONEYC ,   AMMOUNT_OF_MONEYL ,   COLLECTION_UNIT_NAME ,   DEPARTMENT_HEAD ,   FINANCIAL_SIGNED ,   ACCOUNT ,   BANK_ACCOUNT ,   SUPERVISOR_SIGNED ,CURRENCY  )
-   	 	values ( #id:INTEGER# ,  #moneyUse:VARCHAR# ,  #applicant:VARCHAR# ,  #inParagraph:VARCHAR# ,  #ammountOfMoneyC:VARCHAR# ,  #ammountOfMoneyL:INTEGER# ,  #collectionUnitName:VARCHAR# ,  #departmentHead:VARCHAR# ,  #financialSigned:VARCHAR# ,  #account:INTEGER# ,  #bankAccount:VARCHAR# ,  #supervisorSigned:VARCHAR# ,#currency:VARCHAR# )
+	        insert into application_money (  ID ,   MONEY_USE ,   APPLICANT ,   IN_PARAGRAPH ,   AMMOUNT_OF_MONEYC ,   AMMOUNT_OF_MONEYL ,   COLLECTION_UNIT_NAME ,   DEPARTMENT_HEAD ,   FINANCIAL_SIGNED ,   ACCOUNT ,   BANK_ACCOUNT ,   SUPERVISOR_SIGNED ,CURRENCY  ,SUBDATE)
+   	 	values ( #id:INTEGER# ,  #moneyUse:VARCHAR# ,  #applicant:VARCHAR# ,  #inParagraph:VARCHAR# ,  #ammountOfMoneyC:VARCHAR# ,  #ammountOfMoneyL:INTEGER# ,  #collectionUnitName:VARCHAR# ,  #departmentHead:VARCHAR# ,  #financialSigned:VARCHAR# ,  #account:INTEGER# ,  #bankAccount:VARCHAR# ,  #supervisorSigned:VARCHAR# ,#currency:VARCHAR# ,#subDate:TIMESTAMP#)
    	
   </insert>
  	  <select id="getApplicationMoneyCount" resultClass="int"
 		parameterClass="ApplicationMoney">
 		select count(id)
 		from
-		ApplicationMoney su
+		application_money su
 		<dynamic prepend="where">
 			<isNotEmpty prepend="and" property="id">
 				su.id = #id:INTEGER# 
@@ -68,8 +69,10 @@
 
 	<select id="getPaginatedApplicationMoney" resultMap="re_ApplicationMoney">
    <![CDATA[
-   select * from (select a.*,rownum rn from ApplicationMoney a where rownum <= #endIndex#) where rn > #beginIndex#]]>
+   select * from (select a.*,rownum rn from application_money a   where rownum <= #endIndex# order  by id desc) where rn > #beginIndex#]]>
 	</select>
+	
+	
  	
  	<update id="updateByPrimaryKey" parameterClass="com.skyjoo.skyper.biz.applicationmoney.domain.ApplicationMoney">
    	UPDATE application_money SET
@@ -83,7 +86,8 @@
 	        FINANCIALSIGNED = #financialSigned:VARCHAR# ,
 	        ACCOUNT = #account:INTEGER# ,
 	        BANK_ACCOUNT = #bankAccount:VARCHAR# ,
-	        SUPERVISOR_SIGNED = #supervisorSigned:VARCHAR# 
+	        SUPERVISOR_SIGNED = #supervisorSigned:VARCHAR# ,
+	        SUBDATE=#subDate:TIMESTAMP#
         WHERE 
 	        ID = #id:INTEGER# 
   </update>
@@ -124,6 +128,9 @@
   	  </isNotNull>
   	   <isNotNull prepend="," property="supervisorSigned">
   	 	  SUPERVISOR_SIGNED = #supervisorSigned:VARCHAR#
+  	  </isNotNull>
+  	   <isNotNull prepend="," property="subDate">
+  	 	  SUBDATE = #subDate:TIMESTAMP#
   	  </isNotNull>
      </dynamic>
     where ID = #id:INTEGER# 

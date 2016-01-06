@@ -5,13 +5,13 @@
 
 	
 	
-    <h4 id="" class="menu-closed">生日查询</h4>
+    <h4 id="" class="menu-closed">其他员工信息</h4>
 	<ul id="" style="display:none">
     		<li>
-    			<a href="#" onclick="reWrite($subMenu.id,$menu.id)" target="main">生日统计</a>
+    			<a href="$!{appServer}/birthday/listbyMonth.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">生日统计</a>
     		</li>
 			<li>
-    			<a href="#" onclick="reWrite($subMenu.id,$menu.id)" target="main">邮件祝福</a>
+    			<a href="$!{appServer}/staff/infomation.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">电话邮件</a>
     		</li>
             
 		</ul>
@@ -19,6 +19,10 @@
 	    <ul id="" style="display:none">
     		<li>
     			<a href="$!{appServer}/leave/leave.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假申请</a>
+    		</li>
+			<li>
+    			<a href="$!{appServer}/leave/list.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假批准</a>
+				
     		</li>
 			<li>
     			<a href="$!{appServer}/leave/leavecount.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假统计</a>
@@ -33,7 +37,7 @@
     <h4>个人信息管理</h4>
 	<ul>
 		<li>
-			<a href="$!{appServer}/staff/list.htm" target="main">个人信息管理</a>
+			<a href="$!{appServer}/staff/edit-init.htm?id=$!{systemUserAgent.id}" target="main">个人信息管理</a>
 		</li>
     </ul>
 </div>

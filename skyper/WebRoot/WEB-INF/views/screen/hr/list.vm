@@ -33,15 +33,15 @@
             #if($!{page2} && ${page2.totalCount} > 0)
                 #foreach($staff in $page2.getData())
                     <tr #if($!{velocityCount}%2 == 0) class="bg" #end>
-                            <td>$!{staff.id}</td>
-							<td>$!{staff.staffName}</td>
+                            <td><a href="detail.htm?id=$!{staff.id}">$!{staff.id}</a></td>
+                            <td><a href="detail.htm?id=$!{staff.id}">$!{staff.staffName}</a></td>
 							<td>$!{staff.email}</td>
 							<td>$!{staff.cellphone}</td>
 							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{staff.birthday})</td>
 							<td class="link-td">
                             <a href="edit-init.htm?id=$!{staff.id}">修改</a>
                             <a href="remove.htm?id=$!{staff.id}" onClick="return confirm('确定删除该用户吗？');" name="delete">删除</a>	
-							<a href="detail.htm?id=$!{staff.id}">详情</a>
+							<a href="addAdmin.htm?id=$!{staff.id}" onClick="return confirm('确定提升为管理员吗？');" name="delete">加为管理员</a>	
                             </td>
 						
                     </tr>

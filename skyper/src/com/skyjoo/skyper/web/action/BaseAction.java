@@ -79,8 +79,8 @@ public class BaseAction {
 
     protected void registerDefaultCustomDateEditor(WebDataBinder binder) {
 
-        // 注册默认的日期格式化类型: yyyy-MM-dd
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // 注册默认的日期格式化类型: yyyy-MM-dd HH
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }

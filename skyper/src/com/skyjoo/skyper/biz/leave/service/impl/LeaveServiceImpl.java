@@ -115,6 +115,12 @@ public class LeaveServiceImpl implements LeaveService{
 		// TODO Auto-generated method stub
 		return leaveDAO.getPaginatedLeave(page);
 	}
+
+	@Override
+	public Paginable<Leave> getPaginatedLeaveByleader(Paginable<Leave> page) {
+		// TODO Auto-generated method stub
+		return leaveDAO.getPaginatedLeaveByleader(page);
+	}
 	
 
 }

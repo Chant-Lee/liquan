@@ -91,4 +91,18 @@ public class LeaveDAOImpl extends BaseDaoiBatis implements LeaveDAO  {
 		        return null;
 		}
 
+		@Override
+		public Paginable<Leave> getPaginatedLeaveByleader(Paginable<Leave> page) {
+			 try
+		        {
+		            super.paginate(page, SQLMAP_SPACE +"getLeaveCountByleader",
+		            			SQLMAP_SPACE +"getPaginatedLeaveByleader");
+		            return page;
+		        }catch(Exception e)
+		        {
+		           log.error(e.getStackTrace());
+		        }
+		        return null;
+		}
+
 }

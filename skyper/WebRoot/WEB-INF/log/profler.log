@@ -1,5 +1,0 @@
-2015-12-03 15:41:32,745 DEBUG [com.eyeieye.melos.profiler.TimeProfiler] - TimeProfiler output:
-Entire running time(millis)=[270] in http://localhost:8080/baymax/login.htm 
-Task:render screen:screen/login.vm running time(millis)[261->264]=3 1%
-Task:merge template:layout/login.vm running time(millis)[266->269]=3 1%
-Task:write output to servlet outputstream with size:2KB. running time(millis)[270->270]=0 0%

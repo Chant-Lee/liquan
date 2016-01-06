@@ -6,16 +6,16 @@
 
 
 .mybtn  {
-     border:none;
-     color:#C6D7EB;
-    text-shadow:1px 1px 0 rgba(0,0,0,.5);
-    cursor:pointer;
+        border:none;
+        color:#C6D7EB;
+        text-shadow:1px 1px 0 rgba(0,0,0,.5);
+        cursor:pointer;
     
-            width:100px;
+        width:100px;
         height:40px;
-         -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
         box-shadow:inset 0 0 0 1px #2185CF,inset 0 0 40px 5px rgba(0,0,0,.3),0 0 2px 1px rgba(0,0,0,.5);
         margin:10px 10px 20px;
         display:block;
@@ -36,9 +36,7 @@
    <input type="button" class="mybtn"  onclick="location.href='$!{appServer}/birthday/listbyMonth.htm'" value="当前月份" />
 </div>
 <div class="basic">
-    <div class="tool">
-
-		
+    <div class="tool">		
     </div>
 	<div class="listbox" >
         <table class="list-table"  >
@@ -60,10 +58,14 @@
 							<td>$!{staff.cellphone}</td>
 							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{staff.birthday})</td>
 							<td class="link-td">
-							<a href="$!{appServer}/birthday/sendEmail.htm?id=$!{staff.id}">邮件祝福</a>
+							<a href="mailto:$!{staff.email}?subject=生日快乐&body=$!{staff.staffName}<br>生日快乐">邮件祝福软件</a>
+						
+						#*	<a href="$!{appServer}/birthday/sendEmail.htm?id=$!{staff.id}">邮件祝福</a> *#
+						
                             </td>
 						
                     </tr>
+					
                 #end
                 #else
                     <tr>
@@ -72,10 +74,7 @@
                         </td>
                     </tr>
 			#end
-					<form name="upload" method="post" action="$!{appServer}/simple/upload.htm" enctype="multipart/form-data">
-                                            请选择文件：<input type="file" name="upfile" /><br/>
-                                 <input type="submit" value="上传" />
-                     </form>
+					
 				
 				
 			

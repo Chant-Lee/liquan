@@ -40,4 +40,6 @@ public interface LeaveDAO {
 
 	public Paginable<Leave> getPaginatedLeave(Paginable<Leave> page);
 
+	public Paginable<Leave> getPaginatedLeaveByleader(Paginable<Leave> page);
+
 }

@@ -19,7 +19,7 @@ public class SendEmailAction extends BaseAction{
 	@Autowired
 	private StaffService      staffService;
 	   @RequestMapping("/birthday/sendEmail.htm")
-       public String editInit(@RequestParam("id") Long staffId,@ModelAttribute("staff") Staff staff, Model model) {
+       public String editInit(@RequestParam("id") String staffId,@ModelAttribute("staff") Staff staff, Model model) {
 		   staff= staffService.findById(staffId);
 		   mailSendService.sendBirthdayWishes(staff);
 

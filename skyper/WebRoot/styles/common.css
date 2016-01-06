@@ -444,6 +444,7 @@ body.login {
 	background: #fff;
 }
 
+
 /* 机构开户回单打印,accountorg/printInfo.vm */
 .printhead-td {
 	background: url(../images/printlogo.png) left bottom no-repeat;

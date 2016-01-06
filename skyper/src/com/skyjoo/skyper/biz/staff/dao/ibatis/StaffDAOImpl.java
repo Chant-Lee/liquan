@@ -29,14 +29,14 @@ public class StaffDAOImpl extends BaseDaoiBatis implements StaffDAO  {
 	        return rows;
 		}
 		
-		public Staff selectByPrimaryKey(Long id){
+		public Staff selectByPrimaryKey(String id){
 			 Staff key = new Staff();
 	         key.setId(id);
 			Staff record = (Staff) getSqlMapClientTemplate().queryForObject("Staff.selectByPrimaryKey", key);
 	         return record;
 	    }
 	 
-		public int deleteByPrimaryKey(Long id){
+		public int deleteByPrimaryKey(String id){
 	    	 Staff key = new Staff();
 	         key.setId(id);
 	         int rows = getSqlMapClientTemplate().delete("Staff.deleteByPrimaryKey", key);

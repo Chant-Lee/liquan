@@ -4,13 +4,15 @@
 </form>
 </div>
 <div class="basic">
-    <div class="tool">
 
+    <div align="right">
+
+	<span style="font-size:20px">剩余年假：${annualLeaveRemain}</span>
     </div>
 	<div class="listbox" >
         <table class="list-table"  >
             <tr>
-				<th>请假内容</th>
+				<th>请假原因</th>
 				<th>请假类型</th>
 				<th>请假起始时间</th>
 				<th>请假结束时间</th>
@@ -29,7 +31,7 @@
 							<td> $dateUtils.convertDateToString("yyyy-MM-dd", $!{leave.dateSubmission})</td>
 							<td class="link-td" #if ($!{leave.isAccept}==1) style="display: none;" #end >
                             <a href="javascript:void(0)">未批准</a>	
-							<a href="detail.htm?id=$!{leave.id}">详情</a>
+						
                             </td>
 							 <td class="link-td" #if ($!{leave.isAccept}==0) style="display: none;" #end>已批准</td>
 						

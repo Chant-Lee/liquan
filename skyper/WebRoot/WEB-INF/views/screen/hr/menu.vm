@@ -9,7 +9,12 @@
     		<li>
     			<a href="$!{appServer}/hr/list.htm" onclick="" target="main">员工管理</a>
     		</li>
-
+              <li>
+    			<a href="$!{appServer}/hr/contract.htm" onclick="" target="main">员工合同管理</a>
+    		</li>
+			 <li>
+    			<a href="$!{appServer}/total/list.htm" onclick="" target="main">考勤管理</a>
+    		</li>
 		</ul>
 		<ul id="" style="display:none">
     		<li>
@@ -23,18 +28,23 @@
     		<li>
     			<a href="$!{appServer}/birthday/listbyMonth.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">生日统计</a>
     		</li>
-			<li>
-    			<a href="#" onclick="reWrite($subMenu.id,$menu.id)" target="main">邮件祝福</a>
-    		</li>
+			
             
 		</ul>
     <h4 id="" class="menu-closed">请假管理</h4>
 	    <ul id="" style="display:none">
+			<li>
+    			<a href="$!{appServer}/leave/leave.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假申请</a>
+    		</li>
     		<li>
     			<a href="$!{appServer}/leave/list.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假批准</a>
+				
     		</li>
 			<li>
-    			<a href="#" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假统计</a>
+    			<a href="$!{appServer}/leave/listR.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假抄送</a>
+    		</li>
+			<li>
+    			<a href="$!{appServer}/leave/leavecount.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">请假统计</a>
     		</li>
             
 		</ul>
@@ -43,7 +53,9 @@
     		<li>
     			<a href="$!{appServer}/applicationMoney/application.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">用款申请表</a>
     		</li>
-            
+            <li>
+    			<a href="$!{appServer}/applicationMoney/list.htm" onclick="reWrite($subMenu.id,$menu.id)" target="main">历史申请</a>
+    		</li>
 		</ul>
 
 </div>
@@ -52,7 +64,7 @@
     <h4>个人信息管理</h4>
 	<ul>
 		<li>
-			<a href="$!{appServer}/staff/list.htm" target="main">个人信息管理</a>
+			<a href="$!{appServer}/staff/edit-init.htm?id=$!{systemUserAgent.id}" target="main">个人信息管理</a>
 		</li>
     </ul>
 </div>

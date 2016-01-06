@@ -1,5 +1,7 @@
 package com.skyjoo.skyper.biz.applicationmoney.domain;
 
+import java.util.Date;
+
 import com.skyjoo.skyper.biz.attandance.domain.Attandance;
 import com.skyjoo.skyper.biz.common.page.Pagination;
 
@@ -58,6 +60,15 @@ public class ApplicationMoney  extends Pagination<ApplicationMoney>{
 	    * Ö÷¹ÜÇ©Åú
 	    */
 	private   String   supervisorSigned;
+	public Date getSubDate() {
+		return subDate;
+	}
+
+	public void setSubDate(Date subDate) {
+		this.subDate = subDate;
+	}
+
+	private Date subDate;
 
 
 

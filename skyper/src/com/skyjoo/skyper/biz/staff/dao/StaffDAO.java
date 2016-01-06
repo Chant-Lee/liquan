@@ -1,20 +1,11 @@
 package com.skyjoo.skyper.biz.staff.dao;
 
-import java.util.*;
   
  
 
 
-/**
- * @author xlb
- * @version 1.0
- * @since 1.0
- */
-
-
 import java.util.List; 
 
-import org.springframework.stereotype.Repository;
 
 import com.skyjoo.skyper.biz.common.page.Paginable;
 import com.skyjoo.skyper.biz.staff.domain.Staff;
@@ -29,9 +20,9 @@ public interface StaffDAO {
     
    public int updateByPrimaryKeySelective(Staff record);
  
-   public Staff selectByPrimaryKey(Long id);
+   public Staff selectByPrimaryKey(String id);
  
-   public int deleteByPrimaryKey(Long id);
+   public int deleteByPrimaryKey(String id);
     
    public List<Staff> execSql(String sql);
     

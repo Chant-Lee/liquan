@@ -131,11 +131,11 @@ $('#addstaff').validate({
 	<form id="addStaff" action="add.htm" method="post" enctype="multipart/form-data"><!--設置上傳圖片上傳是multipart-->
 		
 		
-		<div  style="
-    position: absolute;
-    right: 15%;
-    top: 10%;
-" align="center id="localImag"><img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
+		<div  style="position:absolute;right:15%; top:10%" align="center id="localImag">
+		      <img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;">
+              <input required="required" type="file" name="upfile" id="upfile" style="width:150px;" onchange="javascript:setImagePreview();">
+
+        </div>
 	<div class="formbox">
         <div class="clear"></div>
         <div class="nr">
@@ -184,12 +184,7 @@ $('#addstaff').validate({
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
 					</tr>
-					<tr>
-                        <th><span class="required">*</span>照片:</th>
-                        <td>
-						       	<input  required="required" type="file" name="upfile" id="upfile" style="width:150px;" onchange="javascript:setImagePreview();">
-                        </td>
-					</tr>
+					
 					<tr>
                         <th><span class="required">*</span>电子邮箱:</th>
                         <td>
@@ -206,14 +201,7 @@ $('#addstaff').validate({
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
 					</tr>
-						<tr>
-                        <th><span class="required">*</span>身份证:</th>
-                        <td>
-							#springBind("staff.cardId")
-							<input type="text"    required="required" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32">
-							<label class="error"><font color="red">${status.errorMessage}</font></label>
-                        </td>
-					</tr>
+				
 						<tr>
                         <th><span class="required">*</span>生日:</th>
                         <td>
@@ -222,14 +210,7 @@ $('#addstaff').validate({
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
 					</tr>
-						<tr>
-                        <th><span class="required">*</span>银行账号:</th>
-                        <td>
-							#springBind("staff.bankCard")
-							<input type="text"  required="required" class="inp" id="bankCard" name="${status.expression}" value="$!{status.value}" maxlength="32">
-							<label class="error"><font color="red">${status.errorMessage}</font></label>
-                        </td>
-					</tr>
+			
 						<tr>
                         <th><span class="required">*</span>入职时间:</th>
                         <td>
@@ -294,14 +275,7 @@ $('#addstaff').validate({
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
 					</tr>
-						<tr>
-                        <th>年假:</th>
-                        <td>
-							#springBind("staff.annualLeave")
-							<input type="text" class="inp" id="annualLeave" name="${status.expression}" value="$!{status.value}" maxlength="32">
-							<label class="error"><font color="red">${status.errorMessage}</font></label>
-                        </td>
-					</tr>
+				
 						<tr>
                         <th><span class="required">*</span>公积金账号:</th>
                         <td>
@@ -309,14 +283,42 @@ $('#addstaff').validate({
 							<input type="text"  required="required" class="inp" id="providentFundAccount" name="${status.expression}" value="$!{status.value}" maxlength="32">
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
-					</tr>	<tr>
-                        <th><span class="required">*</span>参加工作时间:</th>
+					</tr>	
+						<tr>
+                        <th>岗位类别:</th>
                         <td>
-							#springBind("staff.participateInTheWorkYear")
-							<input type="date" required="required" class="inp" id="participateInTheWorkYear" name="${status.expression}" value="$!{status.value}" maxlength="32">
+							#springBind("staff.jobCategories")
+							<input type="text" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
 							<label class="error"><font color="red">${status.errorMessage}</font></label>
                         </td>
 					</tr>
+						<tr>
+                        <th>上级:</th>
+                        <td>
+							#springBind("staff.leaderName")
+							<select type="text" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
+								 <option selected>请选择</option>
+								    #if($!{leaderlist} && ${leaderlist.totalCount} > 0)
+                                    #foreach($staff in $leaderlist.getData())
+								 
+                                 <option value=$!{staff.Id}>$!{staff.staffName}</option>
+									#end
+									#end
+								 
+								 </select>
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>	
+						<tr>
+                        <th>合同到期:</th>
+                        <td>
+							#springBind("staff.jobDeadLine")
+							<input type="date" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
+							<label class="error"><font color="red">${status.errorMessage}</font></label>
+                        </td>
+					</tr>
+					
+					
 					<tr>
                         <th>其他:</th>
                         <td>
@@ -333,7 +335,7 @@ $('#addstaff').validate({
             <!-- 表单按钮区 -->
             <div class="form-but">
                 <input type="submit" id="save" name="save" class="but" value="添加員工"/>
-                <a href="list.htm"><input type="button"  class="but" value="返回" /></a>
+                <a onclick="history.go(-1)"><input type="button"  class="but" value="返回" /></a>
             </div>
             <!-- 表单按钮区 END -->
             <div class="clear"></div>

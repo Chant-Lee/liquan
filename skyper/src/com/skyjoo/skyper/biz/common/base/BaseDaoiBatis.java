@@ -11,12 +11,6 @@ import com.skyjoo.skyper.biz.common.page.SimplePage;
 
 
 
-/**
- * Dao基类
- * 
- * @author zhengdd
- * @version $Id: BaseDao.java,v 0.1 2010-3-19 上午11:12:56 zhengdd Exp $
- */
 @SuppressWarnings("deprecation")
 public abstract class BaseDaoiBatis {
 	// 日志
@@ -40,6 +34,7 @@ public abstract class BaseDaoiBatis {
      * @param qPagination
      */
     
+	@SuppressWarnings("unchecked")
 	public final <T> void paginate(Paginable<T> page, String qTotalCount, String qPagination) {
         if (!(page instanceof SimplePage)) {
             throw new IllegalArgumentException("'page' argument is unsupport class type, " + "it must be "

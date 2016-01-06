@@ -15,12 +15,13 @@
         <result property="dateSubmission" column="DATE_SUBMISSION"/>
         <result property="isAccept" column="ISACCEPT"/>
         <result property="staffName" column="STAFFNAME"/>
+        <result property="leaderId" column="LEADERID"/>
     </resultMap>
     
     <!-- 用于select查询公用抽取的列 -->
 	<sql id="Leave.columns">
 	    <![CDATA[
-        ID ,LEAVE_CONTENT ,LEAVE_TYPE ,LEAVE_TIME ,LEAVE_TARGET_TIME ,STAFFID ,DATE_SUBMISSION ,ISACCEPT,STAFFNAME
+        ID ,LEAVE_CONTENT ,LEAVE_TYPE ,LEAVE_TIME ,LEAVE_TARGET_TIME ,STAFFID ,DATE_SUBMISSION ,ISACCEPT,STAFFNAME,LEADERID
 	    ]]>
 	</sql>
   
@@ -45,8 +46,8 @@
   
    <insert id="insert" parameterClass="com.skyjoo.skyper.biz.leave.domain.Leave">
    <selectKey keyProperty="id">select seq_leave.nextval from dual</selectKey>
-	        insert into leave (  ID ,   LEAVE_CONTENT ,   LEAVE_TYPE ,   LEAVE_TIME ,   LEAVE_TARGET_TIME ,   STAFFID ,   DATE_SUBMISSION   ,ISACCEPT, STAFFNAME)
-   	 	values ( #id:INTEGER# ,  #leaveContent:VARCHAR# ,  #leaveType:VARCHAR# ,  #leaveTime:TIMESTAMP# ,  #leaveTargetTime:TIMESTAMP# ,  #staffId:NUMBER# ,  #dateSubmission:TIMESTAMP#,#isAccept#,#staffName:VARCHAR#  )
+	        insert into leave (  ID ,   LEAVE_CONTENT ,   LEAVE_TYPE ,   LEAVE_TIME ,   LEAVE_TARGET_TIME ,   STAFFID ,   DATE_SUBMISSION   ,ISACCEPT, STAFFNAME,LEADERID)
+   	 	values ( #id:INTEGER# ,  #leaveContent:VARCHAR# ,  #leaveType:VARCHAR# ,  #leaveTime:TIMESTAMP# ,  #leaveTargetTime:TIMESTAMP# ,  #staffId:VARCHAR# ,  #dateSubmission:TIMESTAMP#,#isAccept#,#staffName:VARCHAR# ,#leaderId# )
    	
   </insert>
  	
@@ -60,7 +61,8 @@
 	        STAFFID = #staffId:VARCHAR# ,
 	        DATE_SUBMISSION = #dateSubmission:TIMESTAMP# ,
 	        ISACCEPT=#isAccept#,
-	        STAFFNAME=#staffName#
+	        STAFFNAME=#staffName#,
+	        LEADERID=#leaderId#
         WHERE 
 	        ID = #id:INTEGER# 
   </update>
@@ -75,7 +77,7 @@
 				su.id = #id:INTEGER# 
 			</isNotEmpty>
 			<isNotEmpty prepend="and" property="staffId">
-				su.staffId = #staffId:INTEGER# 
+				su.staffId = #staffId:VARCHAR# 
 			</isNotEmpty>
 		</dynamic>
 	</select>
@@ -86,7 +88,7 @@
 　　select rownum num,temp1.* from(
 　　  select *   from leave u
  ]]> <isNotEmpty  prepend="where" property="staffId">
-				u.staffId = #staffId:INTEGER# 
+				u.staffId = #staffId:VARCHAR# 
 			</isNotEmpty><![CDATA[   
       order by u.isAccept asc, id desc
 　　) temp1 where rownum<=#endIndex#
@@ -122,6 +124,9 @@
   	    <isNotNull prepend="," property="staffName">
   	 	    STAFFNAME=#staffName#
   	  </isNotNull>
+  	    <isNotNull prepend="," property="leaerId">
+  	 	    LEADERID=#"leaerId"#
+  	  </isNotNull>
   	  
      </dynamic>
     where ID = #id:INTEGER# 
@@ -130,5 +135,63 @@
    <select id="execSql" parameterClass="string" resultMap="re_Leave"><![CDATA[$sql$]]></select>
    
     <select id="execSqlObject" parameterClass="string" resultClass="java.lang.Object"><![CDATA[$sql$]]></select>
+    
+    
+    
+    
+    
+      <select id="getLeaveCountByleader" resultClass="int"
+		parameterClass="Leave">
+		select count(id)
+		from
+		Leave su
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="id">
+				su.id = #id:INTEGER# 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="staffId">
+				su.staffId = #staffId:VARCHAR# 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="leaderId">
+				su.leaderId = #leaderId# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="getPaginatedLeaveByleader" resultMap="re_Leave">
+   <![CDATA[   
+   select temp2.* from(
+　　select rownum num,temp1.* from(
+　　  select *   from leave u
+ ]]> <isNotEmpty  prepend="where" property="staffId">
+				u.staffId = #staffId:VARCHAR# 
+			</isNotEmpty>
+<isNotEmpty  prepend="where" property="leaderId">
+				u.leaderId = #leaderId# 
+			</isNotEmpty>			
+			<![CDATA[   
+      order by u.isAccept asc, id desc
+　　) temp1 where rownum<=#endIndex#
+　　)temp2   where temp2.num>#beginIndex#
+  ]]>
+	</select>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </sqlMap>
 

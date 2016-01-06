@@ -13,8 +13,9 @@ public class Leave  extends Pagination<Leave> {
 	/**
 	 *   Ô±¹¤ºÅ
 	 */
-	private   Long     staffId;
+	private   String     staffId;
 	private   String   staffName;
+	private   String   leaderId;
 	/**
 	 * Çë¼ÙÄÚÈÝ
 	 */
@@ -88,12 +89,13 @@ private int isAccept;
 		this.leaveTargetTime = leaveTargetTime;
 	}
 
-	public Long getStaffId() {
+
+	public String getStaffId() {
 		return staffId;
 	}
 
-	public void setStaffId(Long staffID) {
-		this.staffId = staffID;
+	public void setStaffId(String staffId) {
+		this.staffId = staffId;
 	}
 
 	public String getStaffName() {
@@ -111,5 +113,11 @@ private int isAccept;
 	public void setDateSubmission(Date dateSubmission) {
 		this.dateSubmission = dateSubmission;
 	}
+	public String getLeaderId() {
+		return leaderId;
+	}
 
+	public void setLeaderId(String leaderId) {
+		this.leaderId = leaderId;
+	}
 }

@@ -36,7 +36,7 @@ $('#addleave').validate({
             <span>申请请假</span>
         </li>
     </ul>
-	<form id="addleave" action="apply.htm" method="post" name="form1">
+	<form id="addleave" >
 	<div class="formbox">
         <div class="clear"></div>
         <div class="nr">
@@ -59,7 +59,7 @@ $('#addleave').validate({
                         </td>
 					</tr>
 					<tr>
-                        <th><span class="required"></span>请假内容:</th>
+                        <th><span class="required"></span>请假原因:</th>
                         <td>
 							#springBind("leave.leaveContent")
 							<input disabled="true" type="text" class="inp" id="leaveContent" name="${status.expression}" value="$!{status.value}" maxlength="10">
@@ -97,7 +97,7 @@ $('#addleave').validate({
             <!-- 表单按钮区 -->
             <div class="form-but">
                 <a href="accept.htm?id=$!{leave.id}" onClick="return confirm('确定批准吗？');"><input type="button"  class="but" value="批准" /></a>
-                <a href="list.htm"><input type="button"  class="but" value="返回" /></a>
+                <a onclick="history.go(-1)"><input type="button"  class="but" value="返回" /></a>
             </div>
             <!-- 表单按钮区 END -->
             <div class="clear"></div>

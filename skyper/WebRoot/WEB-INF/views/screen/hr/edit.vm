@@ -90,6 +90,8 @@ $("#passwordcheck").attr("value",'');
 }
 
 
+
+
     $(function(){
    		 $("#save").click(function(){
     		$("input[name=role]").each(function(){
@@ -110,18 +112,18 @@ $("#passwordcheck").attr("value",'');
         </ul>
         <div class="formbox">
             <div class="clear"></div>
-            <form id="staff" name="staff" action="edit.htm" method="post">
+            <form id="staff" name="staff" action="edit.htm" method="post"  onsubmit="cal()">
 						
-		<div  style="
-    position: absolute;
-    right: 15%;
-    top: 10%;
-" align="center id="localImag">	
-#if(${staff.photo})
-<img id="preview" src="$!{imageServer}/upload/${staff.photo}" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
- 	#else
-		<img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
-#end
+		<div  style="position: absolute;right:15%;top:10%;" align="center id="localImag">	
+            #if(${staff.photo})
+            <img id="preview" src="$!{imageServer}/upload/${staff.photo}" width="150" height="180" style="display: block; width: 150px; height: 180px;">
+ 	        #else
+		    <img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;">
+			#end
+			 #springBind("staff.photo")
+			<input    type="file" name="${status.expression}" id="upfile" style="width:150px;" onchange="javascript:setImagePreview();">
+                                     
+		</div>
 		
                     <div class="nr">
                         <div class="nr-t"></div>
@@ -148,13 +150,6 @@ $("#passwordcheck").attr("value",'');
                                         <input class="inp" required="required"	type="text"  name="${status.expression}" value="$!{status.value}" maxlength="16" class="inp"/>
                                     </td>
                                 </tr>
-								<tr>
-                                       <th><span class="required">*</span>照片:</th>
-                                        <td>
-									     #springBind("staff.photo")
-						               	<input    type="file" name="${status.expression}" id="upfile" style="width:150px;" onchange="javascript:setImagePreview();">
-                                        </td>
-					            </tr>
 								
 								<tr>
                                     <th>性别：</th>
@@ -170,28 +165,7 @@ $("#passwordcheck").attr("value",'');
                                     </td>
                                 </tr>
 								
-								 <tr>
-                                    <th>
-                                        <span style="color:red">*</span>
-											密码：
-									</th>
-                                    <td>
-                                        #springBind("staff.password")
-                                        <input class="inp"	 required="required" type="password" id="password" name="${status.expression}" value="$!{status.value}" maxlength="16" class="inp"/>
-                                    </td>
-								</tr>	
-									
-								 <tr>
-                                    <th>
-                                        <span style="color:red">*</span>
-											密码检验：
-									</th>
-                                    <td>
-                                       
-                                        <input class="inp"	 required="required" type="password" id="passwordcheck" onblur="checkpassword()"  maxlength="16" class="inp"/>
-                                        <label class="error">${status.errorMessage}</label>
-                                    </td>
-								</tr>
+								
 								
 								
                                 <tr>
@@ -214,22 +188,7 @@ $("#passwordcheck").attr("value",'');
                                             (电话号码格式为：区号-号码)
                                     </td>
                                 </tr>
-								 <tr>
-                                    <th>身份证：</th>
-                                    <td>
-                                        #springBind("staff.cardId")
-                                        <input class="inp"	 required="required" type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                        <label class="error">${status.errorMessage} #if(${isTelAndMobileInValid}) 电话和手机不能同时为空  #end </label>
-                                    </td>
-                                </tr>
-					
-								 <tr>
-                                    <th>银行卡号：</th>
-                                    <td>
-                                        #springBind("staff.bankCard")
-                                        <input class="inp"	 required="required" type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                    </td>
-                                </tr>
+								
 							
 
                                 <tr>
@@ -297,15 +256,13 @@ $("#passwordcheck").attr("value",'');
                                     <td>
                                         #springBind("staff.workYears")
                                         <input class="inp"	type="text"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                        <label class="error">${status.errorMessage} #if(${isTelAndMobileInValid}) 电话和手机不能同时为空  #end </label>
                                     </td>
                                 </tr>
 								<tr>
                                     <th>年假：</th>
                                     <td>
                                         #springBind("staff.annualLeave")
-                                        <input class="inp"	type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                        <label class="error">${status.errorMessage} #if(${isTelAndMobileInValid}) 电话和手机不能同时为空  #end </label>
+                                        <input class="inp"	type="text" id="annualLeave" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
                                     </td>
                                 </tr>
 								<tr>
@@ -313,16 +270,47 @@ $("#passwordcheck").attr("value",'');
                                     <td>
                                         #springBind("staff.providentFundAccount")
                                         <input class="inp"	type="text"  required="required"  name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                        <label class="error">${status.errorMessage} #if(${isTelAndMobileInValid}) 电话和手机不能同时为空  #end </label>
                                     </td>
                                 </tr>
 								<tr>
                                     <th>参加工作时间：</th>
                                     <td>
                                         #springBind("staff.participateInTheWorkYear")
-                                        <input class="inp"	type="date"  required="required" name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
+                                        <input class="inp"	type="date"   name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
                                     </td>
                                 </tr>
+								
+															<tr>
+                        <th>岗位类别:</th>
+                        <td>
+							#springBind("staff.jobCategories")
+							<input type="text" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
+                        </td>
+					</tr>
+						<tr>
+                        <th>上级:</th>
+                        <td>
+							#springBind("staff.leaderName")
+							<select type="text" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
+								    #if($!{leaderlist} && ${leaderlist.totalCount} > 0)
+                                    #foreach($s in $leaderlist.getData())
+										
+                                 <option  #if($!{staff.LeaderName.toString()}==$!{s.Id.toString()})selected#end value=$!{s.Id}>$!{s.staffName}</option>
+								
+									#end
+									#end
+								 </select>
+                        </td>
+					</tr>
+						<tr>
+                        <th>合同到期:</th>
+                        <td>
+							#springBind("staff.jobDeadLine")
+							<input type="date" class="inp"  name="${status.expression}" value="$!{status.value}" maxlength="32" >
+                        </td>
+					</tr>
+								
+								
 								<tr>
                                     <th>补充：</th>
                                     <td>
@@ -345,7 +333,7 @@ $("#passwordcheck").attr("value",'');
                 					jQuery("#staff").attr("action","initPassword.htm?").submit();
                 				}
                             </script>
-                            <input type="button" class="but"  onclick="location.href='list.htm'" value="返回" />
+                            <input type="button" class="but"  onclick="history.go(-1)" value="返回" />
                         </div>
                         <!-- 表单按钮区 END -->
                         <div class="clear"></div>
@@ -354,3 +342,4 @@ $("#passwordcheck").attr("value",'');
 			<div class="clear"></div>
      </div>
 </div>
+	

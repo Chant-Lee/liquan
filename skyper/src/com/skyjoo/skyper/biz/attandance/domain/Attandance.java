@@ -3,29 +3,29 @@ package com.skyjoo.skyper.biz.attandance.domain;
 import java.util.Date;
 
 import com.skyjoo.skyper.biz.common.page.Pagination;
-import com.skyjoo.skyper.biz.leave.domain.Leave;
+
 
 
 public class Attandance   extends Pagination<Attandance>{
 	 
 	
-		private java.lang.Long id;
-		private Long staffId;
-		private java.lang.String staffName;
-		private java.lang.String type;
+		private Long id;
+		private String staffId;
+		private String staffName;
+		private String type;
 		private Date datetime;
 		private String remark;
-		public java.lang.Long getId() {
+		public Long getId() {
 			return id;
 		}
 		public void setId(java.lang.Long id) {
 			this.id = id;
 		}
 	
-		public Long getStaffId() {
+		public String getStaffId() {
 			return staffId;
 		}
-		public void setStaffId(Long staffId) {
+		public void setStaffId(String staffId) {
 			this.staffId = staffId;
 		}
 		public java.lang.String getStaffName() {

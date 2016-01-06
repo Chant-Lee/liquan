@@ -66,7 +66,7 @@ public class UserLoginAction {
 	
 			if(staff.getId()!=null)
 			{
-				long id=staff.getId();
+                   String   id=staff.getId();
 			if(	staffService.findById(id)!=null)
 			{
 				String password=staff.getPassword();

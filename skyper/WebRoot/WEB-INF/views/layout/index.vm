@@ -37,6 +37,7 @@
                 <div class="clear"></div>
             </div><!-- ÄÚÈÝ END -->
 			$contain.get('/common/footer.htm')
+
         </div>	
     </body>
 </html>

@@ -40,5 +40,7 @@ public interface  LeaveService{
 	public List<Leave> selectByPage(int pageIndex, int pageSize, String strWhere, String strOrderBy);
 	
 	public int getRecordCount(String strWhere);
+
+	public Paginable<Leave> getPaginatedLeaveByleader(Paginable<Leave> page);
 	
 }

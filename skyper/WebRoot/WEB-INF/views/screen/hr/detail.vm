@@ -1,7 +1,13 @@
 <link rel="stylesheet" type="text/css" href="$!{imageServer}/styles/validate.css" />
+<link rel="stylesheet" type="text/css" href="$!{imageServer}/styles/common.css" />
+
 <script src="$!{imageServer}/scripts/system/user.js" type="text/javascript" charset="gb2312"></script>
 <script src="$!{imageServer}/scripts/jquery.validate.js" type="text/javascript"></script>
 <script>
+
+
+
+
 
 
 
@@ -18,35 +24,36 @@
 </script>
 <style type="text/css">
 	.inp{disabled:"disabled"}
+	input
+		{			  
+		   border:none;	
+		   background-color:transparent;
+        }
 </style>
 <div class="main-right" >
     <div class="basic">
 		<ul class="form-tab">
             <li class="c">
-                <span>用户修改</span>
+                <span>用户详细信息</span>
             </li>
         </ul>
         <div class="formbox">
             <div class="clear"></div>
-            <form id="staff" name="staff" action="edit.htm" method="post">
-				<div id="img" style="
-    position: absolute;
-    right: 15%;
-    top: 10%;
-">
+            <form id="staff" >
+				<div id="img" style="position: absolute;right:15%; top:10%;">
              
-			   #if(${staff.photo})
-<img id="preview" src="$!{imageServer}/upload/${staff.photo}" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
- 	#else
-		<img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
-#end
+			         #if(${staff.photo})
+                   <img id="preview" src="$!{imageServer}/upload/${staff.photo}" width="150" height="180" ">
+ 	                    #else
+		           <img id="preview" src="$!{imageServer}/images/default_photo.png" width="150" height="180" ">
+                      #end
 			
-                </div>
+                  </div>
 				
                     <div class="nr">
                         <div class="nr-t"></div>
                         <div class="nr-c">
-                            <table class="c2">
+                            <table class="c2 c4">
                                 <tr>
                                     <th>
                       
@@ -74,13 +81,14 @@
                                     <th>性别：</th>
                                     <td>
                                         #springBind("staff.gender")
-									
-										<input  disabled="true" type="radio"  required="required" name="${status.expression}" onclick="check(this.value)"value="男" #if($!{status.value}=="男")
+									 <input   disabled="true" class="inp" required="required"	type="text"  name="${status.expression}" value="$!{status.value}" maxlength="16" class="inp"/>
+                                    
+									<!--	<input  disabled="true" type="radio"  required="required" name="${status.expression}" onclick="check(this.value)"value="男" #if($!{status.value}=="男")
 											checked="checked"
 									    #end/>男<br />
                                         <input  disabled="true" type="radio" name="${status.expression}" onclick="check(this.value)"value="女"  	#if($!{status.value}=="女")
 											checked="checked"
-									    #end/>女<br />
+									    #end/>女<br />-->
                                     </td>
                                 </tr>
 								
@@ -114,21 +122,7 @@
                                       
                                     </td>
                                 </tr>
-								 <tr>
-                                    <th>身份证：</th>
-                                    <td>
-                                        #springBind("staff.cardId")
-                                        <input class="inp"	 disabled="true" required="required" type="text"   name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                   </td>
-                                </tr>
-					
-								 <tr>
-                                    <th>银行卡号：</th>
-                                    <td>
-                                        #springBind("staff.bankCard")
-                                        <input class="inp"	 disabled="true" required="required" type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
-                                       </td>
-                                </tr>
+						
 							
 
                                 <tr>
@@ -193,7 +187,7 @@
                                     <th>年假：</th>
                                     <td>
                                         #springBind("staff.annualLeave")
-                                        <input class="inp" disabled="true"	type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
+                                        <input class="inp" disabled="true"	id="annualLeave" type="text" name="${status.expression}" value="$!{status.value}" maxlength="11" class="inp" />
                                           </td>
                                 </tr>
 								<tr>
@@ -210,6 +204,32 @@
                                         <input class="inp" disabled="true"	type="date"  required="required" name="${status.expression}"  value="$!{status.value}" maxlength="11" class="inp" />
                                            </td>
                                 </tr>
+								
+											<tr>
+                        <th>岗位类别:</th>
+                        <td>
+							#springBind("staff.jobCategories")
+							<input type="text" class="inp" disabled="true" name="${status.expression}" value="$!{status.value}" maxlength="32" >
+                        </td>
+					</tr>
+						<tr>
+                        <th>上级:</th>
+                        <td>
+							#springBind("staff.leaderName")
+							<input type="text" class="inp" disabled="true" name="${status.expression}" value="$!{status.value}" maxlength="32" >
+                        </td>
+					</tr>
+						<tr>
+                        <th>合同到期:</th>
+                        <td>
+							#springBind("staff.jobDeadLine")
+							<input type="date" class="inp" disabled="true" name="${status.expression}" value="$!{status.value}" maxlength="32" >
+								
+                        </td>
+					</tr>
+								
+								
+								
 								<tr>
                                     <th>补充：</th>
                                     <td>
@@ -225,12 +245,12 @@
 						<input type="hidden" id="roles" name="roles" value=""/>
                         </div>
                         <div class="form-but"><!-- 表单按钮区 -->
-                            <input type="button" class="but"  onclick="location.href='list.htm'" value="返回" />
+                            <input type="button" class="but"  onclick="history.go(-1)" value="返回" />
                         </div>
                         <!-- 表单按钮区 END -->
                         <div class="clear"></div>
+		
 				</form>
 			</div>
-			<div class="clear"></div>
      </div>
 </div>

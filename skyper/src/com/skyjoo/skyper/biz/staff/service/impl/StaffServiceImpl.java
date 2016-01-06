@@ -22,7 +22,7 @@ public class StaffServiceImpl implements StaffService {
 	@Autowired
 	private StaffDAO staffDAO;	
 	
-	public Staff findById(Long id) {
+	public Staff findById(String id) {
 		// TODO Auto-generated method stub
 		return staffDAO.selectByPrimaryKey(id);
 	}
@@ -44,7 +44,7 @@ public class StaffServiceImpl implements StaffService {
 		
 	}
 
-	public void delete(Long id) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
 		staffDAO.deleteByPrimaryKey(id);
 	}

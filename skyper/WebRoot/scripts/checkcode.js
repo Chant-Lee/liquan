@@ -1,11 +1,11 @@
 Pn.ns('JCore','JCore.CheckCode');
 /**
  * @param input
- *            éªŒè¯ç è¾“å…¥æ¡†jqueryå¯¹è±¡ã€‚
+ *            ÑéÖ¤ÂëÊäÈë¿òjquery¶ÔÏó¡£
  * @param url
- *            éªŒè¯ç çš„urlåœ°å€ã€‚
+ *            ÑéÖ¤ÂëµÄurlµØÖ·¡£
  * @param top
- *            ä¸Šä¸‹åç§»é‡ã€‚
+ *            ÉÏÏÂÆ«ÒÆÁ¿¡£
  */
 JCore.CheckCode.cssClass = 'j-chkcode';
 JCore.CheckCode.url = '/CheckCode.svl';
@@ -45,7 +45,7 @@ JCore.CheckCode = function(input, url, top) {
 };
 JCore.CheckCode.prototype.createHtml = function() {
 	this.imgLayer = $('<div/>');
-	this.img = $('<img border="0" alt="éªŒè¯ç çœ‹ä¸æ¸…æ¥š?è¯·ç‚¹å‡»åˆ·æ–°éªŒè¯ç "/>');
+	this.img = $('<img border="0" alt="ÑéÖ¤Âë¿´²»Çå³ş?Çëµã»÷Ë¢ĞÂÑéÖ¤Âë"/>');
 	var o = this;
 	this.img.bind('click', function() {
 		o.input.focus();

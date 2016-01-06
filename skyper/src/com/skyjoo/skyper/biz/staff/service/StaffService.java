@@ -1,16 +1,11 @@
 package com.skyjoo.skyper.biz.staff.service;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 import com.skyjoo.skyper.biz.common.page.Paginable;
-import com.skyjoo.skyper.biz.leave.domain.Leave;
 import com.skyjoo.skyper.biz.staff.domain.Staff;
 
 
-
-
-import java.util.*;
 /**
  * @author xlb
  * @version 1.0
@@ -20,7 +15,7 @@ import java.util.*;
 
 public interface  StaffService{ 
 
-	public Staff findById(Long id);
+	public Staff findById(String id);
 	
 	public void save(Staff item);
 	
@@ -28,7 +23,7 @@ public interface  StaffService{
 	
 	public void updateSelective(Staff item);
 	
-	public void delete(Long id);
+	public void delete(String id);
 	
     public void deleteByWhere(String swhere);
 	

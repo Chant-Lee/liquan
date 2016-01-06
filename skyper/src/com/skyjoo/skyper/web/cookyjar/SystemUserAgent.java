@@ -8,24 +8,28 @@ import com.skyjoo.skyper.biz.user.domain.User;
 
 public class SystemUserAgent implements SelfDependence {
 	
-	private Long id;
+	private String id;
 	private String loginName;
-  
+	private String isAdmin;//是否是管理员
 	
 	public SystemUserAgent() {}
 	
 	public SystemUserAgent(Staff user) {
 	      this.id=user.getId();
 	      this.loginName=user.getStaffName();
+	      this.isAdmin=String.valueOf(user.getIsAdmin());
 	}
 
 
 
-   public Long getId() {
+   public String getId() {
 		return id;
 	}
 
-
+   public String getIsAdmin()
+   {
+	   return isAdmin;
+   }
 	public String getLoginName() {
 		return loginName;
 	}
@@ -37,7 +41,7 @@ public class SystemUserAgent implements SelfDependence {
     */
 	@Override
 	public String lieDown() {
-		return SelfUtil.format(String.valueOf(this.id), this.loginName);
+		return SelfUtil.format(String.valueOf(this.id), this.loginName,String.valueOf(this.isAdmin));
 
 	}
     /**
@@ -46,9 +50,10 @@ public class SystemUserAgent implements SelfDependence {
 	@Override
 	public SelfDependence riseUp(String value) {
 		String[] values = SelfUtil.recover(value);
-		this.id = Long.valueOf(values[0]);
+		this.id = values[0];
 		
 		this.loginName = values[1];
+		this.isAdmin = values[2];
 		return this;
 	}
 	
