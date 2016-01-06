@@ -15,7 +15,7 @@ public class Staff  extends Pagination<Staff>{
 	 */
 	private String staffName;
 	private String password;
-	private int  annualLeave;
+	private double  annualLeave;
 	/**
 	 * ÐÔ±ð
 	 */
@@ -83,12 +83,14 @@ public class Staff  extends Pagination<Staff>{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAnnualLeave() {
+
+	public double getAnnualLeave() {
 		return annualLeave;
 	}
-	public void setAnnualLeave(int annualLeave) {
+	public void setAnnualLeave(double annualLeave) {
 		this.annualLeave = annualLeave;
 	}
+
 	public String getGender() {
 		return gender;
 	}

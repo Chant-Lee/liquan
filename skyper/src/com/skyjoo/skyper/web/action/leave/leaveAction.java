@@ -28,11 +28,12 @@ import com.skyjoo.skyper.biz.staff.service.StaffService;
 import com.skyjoo.skyper.biz.total.domain.Total;
 import com.skyjoo.skyper.biz.total.service.TotalService;
 import com.skyjoo.skyper.web.action.BaseAction;
+import com.skyjoo.skyper.web.action.leaveBase;
 import com.skyjoo.skyper.web.action.Interceptor.AuthRole;
 import com.skyjoo.skyper.web.cookyjar.SystemUserAgent;
 
 @Controller
-public class leaveAction extends BaseAction{
+public class leaveAction extends leaveBase{
 	@Autowired
 	private LeaveService leaveService;
 	@Autowired 
@@ -73,16 +74,30 @@ public class leaveAction extends BaseAction{
 		if (startDate.after(endDate))
 	        throw new Exception("开始时间应该在结束时间之后");
 	    Long spi = endDate.getTime() - startDate.getTime();
-	    int step = (int) (spi / (24 * 60 * 60 * 1000));// 相隔天数
+	    double step =  (spi *
+	    		1.0/ (24 * 60 * 60 * 1000));// 相隔天数
 
+	  
+		 
+		  int step2=(int) (spi / (24 * 60 * 60 * 1000));
+
+		  if(step==step2)//无小数
+		  {
+			  
+		  }
+		  else //有小树
+		  {
+			  step=(int)step+0.5;
+		  }
+	    
 	    Staff staff=staffService.findById(leave.getStaffId());
 	    if(leave.getLeaveType().equals("年假"))
 	    {
 	    	
-	    	int annualleave=staff.getAnnualLeave();
-	    	if(annualleave>=(1+step))
+	    	double annualleave=staff.getAnnualLeave();
+	    	if(annualleave>=(step))
 	    	{
-	    		annualleave=annualleave-step;
+	    	annualleave=annualleave-step;
 	    	staff.setAnnualLeave(annualleave);
 	    	staffService.update(staff);	
 	    	}
@@ -100,42 +115,42 @@ public class leaveAction extends BaseAction{
 	    DateFormat df1 = DateFormat.getDateInstance();//日期格式，精确到日
         System.out.println(df1.format(startDate));
         remark+=df1.format(startDate).toString();
-        remark+=""+step+1+"天";
+        remark+=""+step+"天";
 	    if(leave.getLeaveType().equals("年假"))
 	    {
-	    	  total.setAnnual((1+step)+total.getAnnual());
-	    	  total.setTotalannual((1+step)+total.getTotalannual());
+	    	  total.setAnnual((step)+total.getAnnual());
+	    	  total.setTotalannual((step)+total.getTotalannual());
 	    	  
 	    	  
 	    }
 	    if(leave.getLeaveType().equals("病假"))
 	    {
-	    	total.setSice((1+step)+total.getSice());
-	    	total.setTotalsice((1+step)+total.getTotalsice());
+	    	total.setSice((step)+total.getSice());
+	    	total.setTotalsice((step)+total.getTotalsice());
 	    }
 	    if(leave.getLeaveType().equals("婚假"))
 	    {
-	    	total.setMarriage((1+step)+total.getMarriage());
+	    	total.setMarriage((step)+total.getMarriage());
 	    	//total.setTotalmaternity(value)
 	    }
 	    if(leave.getLeaveType().equals("产假"))
 	    {
-	    	total.setMaternity((1+step)+total.getMaternity());
-	    	total.setTotalmaternity((1+step)+total.getTotalmaternity());
+	    	total.setMaternity((step)+total.getMaternity());
+	    	total.setTotalmaternity((step)+total.getTotalmaternity());
 	    }
 	    if(leave.getLeaveType().equals("护理假"))
 	    {
-	    	total.setNurse(total.getNurse()+(1+step));
+	    	total.setNurse(total.getNurse()+(step));
 	    	
 	    }
 	    if(leave.getLeaveType().equals("事假"))
 	    {
-	    	total.setThing((1+step)+total.getThing());
-	    	total.setTotalthing((1+step)+total.getTotalthing());
+	    	total.setThing((step)+total.getThing());
+	    	total.setTotalthing((step)+total.getTotalthing());
 	    }
 	    if(leave.getLeaveType().equals("其他假"))
 	    {
-	    	total.setOther((1+step)+total.getOther());
+	    	total.setOther((step)+total.getOther());
 	    	
 	    }
 	 
@@ -170,7 +185,7 @@ public class leaveAction extends BaseAction{
 		leave.setStaffId(agent.getId());
 		leave =  (Leave)leaveService.getPaginatedLeave(leave);
 		model.addAttribute("page2", leave);
-		int num=staffService.findById(agent.getId()).getAnnualLeave();
+		double num=staffService.findById(agent.getId()).getAnnualLeave();
 		model.put("annualLeaveRemain", num);
 		return "leave/leavecount";
 	}

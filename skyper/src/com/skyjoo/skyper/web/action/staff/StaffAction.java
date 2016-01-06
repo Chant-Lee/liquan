@@ -50,7 +50,7 @@ public class StaffAction extends BaseAction{
 			  staff.setIsAdmin(isAdmin);
 		Date entrytimeDate=s.getEntryTime();
 		staff.setEntryTime(entrytimeDate);
-		int annualleave=s.getAnnualLeave();
+		double annualleave=s.getAnnualLeave();
 		staff.setAnnualLeave(annualleave);
 		Date endtimeDate=s.getJobDeadLine();
 		staff.setJobDeadLine(endtimeDate);
